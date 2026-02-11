@@ -1,0 +1,91 @@
+:root {
+  /* ── Couleurs principales ── */
+  --color-bg:           #0d0b08;
+  --color-bg-secondary: #141210;
+  --color-bg-card:      #1a1612;
+  --color-bg-overlay:   rgba(13, 11, 8, 0.85);
+
+  --color-copper:       #b87333;
+  --color-copper-light: #d4964a;
+  --color-copper-dark:  #8a5520;
+
+  --color-amber:        #c8860a;
+  --color-amber-light:  #e8a020;
+  --color-amber-dark:   #9a6408;
+
+  --color-rust:         #8b3a0f;
+  --color-rust-light:   #b04c18;
+
+  --color-steam:        #d4c9a8;
+  --color-steam-muted:  #9a8e78;
+  --color-steam-dark:   #6a5e48;
+
+  /* ── Couleurs sémantiques ── */
+  --color-success:      #4a7c3f;
+  --color-success-text: #a0d898;
+  --color-error:        #8b1a1a;
+  --color-error-text:   #ff9999;
+  --color-warning:      #8b6a0f;
+  --color-warning-text: #ffd080;
+  --color-alert:        #c0392b;
+  --color-alert-text:   #ff6b6b;
+
+  /* ── Rôles UI ── */
+  --color-border:       rgba(184, 115, 51, 0.35);
+  --color-border-focus: var(--color-amber);
+  --color-text:         var(--color-steam);
+  --color-text-muted:   var(--color-steam-muted);
+  --color-text-strong:  #f0e8d0;
+  --color-link:         var(--color-amber-light);
+  --color-link-hover:   var(--color-copper-light);
+
+  /* ── Typographie ── */
+  --font-display:  'Special Elite', 'Courier New', serif;
+  --font-body:     'Share Tech Mono', 'Courier New', monospace;
+  --font-size-xs:  11px;
+  --font-size-sm:  13px;
+  --font-size-md:  15px;
+  --font-size-lg:  18px;
+  --font-size-xl:  24px;
+  --font-size-2xl: 32px;
+  --line-height:   1.6;
+
+  /* ── Espacements ── */
+  --space-xs:  4px;
+  --space-sm:  8px;
+  --space-md:  16px;
+  --space-lg:  24px;
+  --space-xl:  32px;
+  --space-2xl: 48px;
+
+  /* ── Bordures & rayons ── */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --border-width: 1px;
+
+  /* ── Ombres ── */
+  --shadow-sm:  0 1px 3px rgba(0, 0, 0, 0.6);
+  --shadow-md:  0 4px 12px rgba(0, 0, 0, 0.7);
+  --shadow-lg:  0 8px 24px rgba(0, 0, 0, 0.8);
+  --shadow-glow-amber: 0 0 12px rgba(200, 134, 10, 0.4);
+  --shadow-glow-copper: 0 0 8px rgba(184, 115, 51, 0.3);
+
+  /* ── Transitions ── */
+  --transition-fast:   150ms ease;
+  --transition-normal: 250ms ease;
+  --transition-slow:   400ms ease;
+
+  /* ── Layout ── */
+  --navbar-height: 56px;
+  --container-max: 1200px;
+  --sidebar-width: 240px;
+}
+
+/* ── Surcharges alerte rouge ── */
+body.alert-rouge {
+  --color-bg:           #1a0505;
+  --color-bg-secondary: #220808;
+  --color-border:       rgba(192, 57, 43, 0.5);
+  --color-copper:       #c0392b;
+  --color-amber:        #e74c3c;
+}
