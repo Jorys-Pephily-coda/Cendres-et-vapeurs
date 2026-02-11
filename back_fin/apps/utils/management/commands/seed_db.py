@@ -1,4 +1,4 @@
-Django management command to seed the database with sample data
+# Django management command to seed the database with sample data
 from django.core.management.base import BaseCommand
 from django.contrib.auth import get_user_model
 from apps.products.models import Product, ProductVote
