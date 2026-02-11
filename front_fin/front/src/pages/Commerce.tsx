@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { fetchCommerce } from "../service/Commerce"
+import { fetchCommerce, addToCart } from "../service/Commerce"
 import '../styles/Commerce.css'
 
 function Commerce() {
@@ -27,9 +27,16 @@ function Commerce() {
 
     return (
         <div className="commerce">
-            <h1>Bienvenue dans la forge des nains</h1>
-            <p>Fait toi plaisir petit humain mais eh faut que ton porte monnaie tienne gamin</p>
-            <button className="bourse-btn">Cours de la bourse</button>
+            <div className="top">
+                <div className="blank">
+                    <h1></h1>
+                </div>
+                <div className="text">
+                    <h1>Bienvenue dans la forge des nains</h1>
+                    <p>Fait toi plaisir petit humain mais eh faut que ton porte monnaie tienne gamin</p>
+                </div>
+                <button className="bourse-btn">Cours de la bourse</button>
+            </div>
             <div className="shop">
                 {commerceData.count > 0 ? (
                     <ul>
@@ -37,7 +44,16 @@ function Commerce() {
                             <li className="product-card" key={product.id}>
                                 <h3>{product.name}</h3>
                                 <p>{product.description}</p>
-                                <p>Price: ${product.price}</p>
+                                <p>Price: ${product.current_price}</p>
+                                <p>Stock: {product.stock}</p>
+                                <input 
+                                    type="number" 
+                                    min="1" 
+                                    max={product.stock} 
+                                    defaultValue="1" 
+                                    className="quantity-input"
+                                />
+                                <button className="panier" onClick={() => addToCart(product.id, 1)}>Ajouter au panier</button>
                             </li>
                         ))}
                     </ul>

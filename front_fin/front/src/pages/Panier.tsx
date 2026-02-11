@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Panier() {
     const [cart, setCart] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchCart();
@@ -71,6 +73,27 @@ function Panier() {
         }
     };
 
+    const handlePay = async () => {
+        try {
+            const response = await fetch('http://localhost:8000/api/orders/create/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify({}),
+            });
+            if (response.ok) {
+                const data = await response.json();
+                navigate(`/commande?orderId=${data.order.id}`);
+            } else {
+                const error = await response.json();
+                alert(error.error || 'Erreur lors de la création de la commande');
+            }
+        } catch (error) {
+            console.error('Erreur:', error);
+            alert('Erreur lors de la création de la commande');
+        }
+    };
+
 
     if (loading) return <div>Chargement...</div>;
 
@@ -122,7 +145,7 @@ function Panier() {
                     </div>
 
                     <div style={{ marginTop: '20px' }}>
-                        <button style={{ padding: '10px 20px', marginRight: '10px' }}>
+                        <button onClick={handlePay} style={{ padding: '10px 20px', marginRight: '10px' }}>
                             Payer
                         </button>
                         <button onClick={clearCart}>Vider le panier</button>
