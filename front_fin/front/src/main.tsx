@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import {createBrowserRouter, createHashRouter, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, RouterProvider} from 'react-router-dom'
 import './index.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
