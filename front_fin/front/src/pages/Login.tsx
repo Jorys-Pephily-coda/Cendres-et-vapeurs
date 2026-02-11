@@ -1,5 +1,4 @@
-import { redirect } from "react-router"
-import { fetchLogin, fetch2FA } from "../service/Auth"
+import { fetchLogin} from "../service/Auth"
 
 function Login() {
 
