@@ -23,7 +23,6 @@ export const fetchLogin = async (
             if (data.requires_2fa) {
                 navigate('/a2f', { state: { username: data.username } })
             } else {
-                // Enregistrer le user et marquer comme connecté
                 if (setUser) setUser(data.results || data)
                 sessionStorage.setItem('connected', 'true')
                 navigate('/dashboard')
@@ -84,7 +83,6 @@ export const fetch2FA = async (
         
         if (response.ok) {
             const data = await response.json()
-            // Enregistrer le user et marquer comme connecté
             if (setUser) setUser(data.results || data)
             sessionStorage.setItem('connected', 'true')
             console.log('2FA verification successful:', data)

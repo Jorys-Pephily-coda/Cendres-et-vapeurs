@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom"
 
 function Register() {
 
+    const navigate = useNavigate()
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        const navigate = useNavigate()
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
         const username = formData.get('username') as string
