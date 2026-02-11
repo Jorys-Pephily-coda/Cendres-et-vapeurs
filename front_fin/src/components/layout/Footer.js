@@ -11,29 +11,11 @@ const Footer = () => {
             <p>Cendres et Vapeur - Survivre dans les décombres du monde ancien.</p>
           </div>
           
-          <div className="footer-section">
-            <h4>Navigation</h4>
-            <ul>
-              <li><a href="/products">Boutique</a></li>
-              <li><a href="/calendar">Planning</a></li>
-              <li><a href="/monitoring">Toxicité</a></li>
-              <li><a href="/contact">Contact</a></li>
-            </ul>
-          </div>
-          
-          <div className="footer-section">
-            <h4>Guilde</h4>
-            <ul>
-              <li><a href="/logs">Journal</a></li>
-              <li><a href="/about">À propos</a></li>
-              <li><a href="/terms">Règlement</a></li>
-            </ul>
-          </div>
         </div>
         
         <div className="footer-bottom">
           <p>&copy; 2026 Cendres et Vapeur - Tous droits réservés dans les terres dévastées</p>
-          <p className="footer-credits">Forgé par le meilleur groupe</p>
+          <p className="footer-credits">Forgé par skibidi</p>
         </div>
       </div>
     </footer>
