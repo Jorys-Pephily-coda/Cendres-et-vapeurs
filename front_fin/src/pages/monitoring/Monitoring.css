@@ -1,0 +1,111 @@
+.monitoring-alert {
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-align: center;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.monitoring-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+}
+
+.monitor-card {
+  text-align: center;
+  padding: var(--spacing-lg);
+  background: linear-gradient(145deg, var(--color-ash), var(--color-steel));
+  transition: transform 0.3s ease;
+}
+
+.monitor-card:hover {
+  transform: translateY(-5px);
+}
+
+.monitor-icon {
+  font-size: 3rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.monitor-label {
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--color-brass);
+  margin-bottom: var(--spacing-sm);
+}
+
+.monitor-value {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: var(--spacing-sm);
+}
+
+.monitor-value.success {
+  color: var(--color-success);
+}
+
+.monitor-value.warning {
+  color: var(--color-warning);
+}
+
+.monitor-value.danger {
+  color: var(--color-danger);
+  animation: blink 1s ease-in-out infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.monitor-unit {
+  font-size: 1rem;
+  margin-left: var(--spacing-xs);
+  color: var(--color-smoke);
+}
+
+.monitor-bar {
+  width: 100%;
+  height: 10px;
+  background: rgba(60, 60, 60, 0.5);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.monitor-bar-fill {
+  height: 100%;
+  transition: width 0.5s ease, background 0.5s ease;
+}
+
+.monitor-bar-fill.success {
+  background: linear-gradient(90deg, var(--color-success), #90EE90);
+}
+
+.monitor-bar-fill.warning {
+  background: linear-gradient(90deg, var(--color-warning), #FFD700);
+}
+
+.monitor-bar-fill.danger {
+  background: linear-gradient(90deg, var(--color-danger), #FF6B6B);
+}
+
+.thresholds-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.threshold-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: 1rem;
+}
