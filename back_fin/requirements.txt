@@ -1,0 +1,30 @@
+# Django Core
+Django==5.0.1
+djangorestframework==3.14.0
+django-cors-headers==4.3.1
+
+# Authentication & Security
+djangorestframework-simplejwt==5.3.1
+PyJWT==2.8.0
+
+# Database
+# psycopg2-binary==2.9.9  # PostgreSQL (commenté - installer si nécessaire avec: sudo pacman -S postgresql-libs)
+
+# WebSocket Support
+channels==4.0.0
+channels-redis==4.1.0
+daphne==4.0.0
+
+# Email
+django-environ==0.11.2
+
+# PDF Generation
+reportlab==4.0.9
+Pillow>=10.3.0  # Version flexible compatible Python 3.14
+
+# Utils
+python-decouple==3.8
+pytz==2024.1
+
+# Development
+django-debug-toolbar==4.2.0
