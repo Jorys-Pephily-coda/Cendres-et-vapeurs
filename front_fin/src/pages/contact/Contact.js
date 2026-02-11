@@ -154,17 +154,8 @@ const Contact = () => {
                       <p>Zone Franche Cendres et Vapeur<br />Secteur 7, Ruines du Vieux Monde</p>
                     </div>
                   </div>
-
                   <div className="contact-info-item">
                     <div className="contact-icon"></div>
-                    <div>
-                      <strong>Email</strong>
-                      <p>contact@cendres-vapeur.zone</p>
-                    </div>
-                  </div>
-
-                  <div className="contact-info-item">
-                    <div className="contact-icon">⏰</div>
                     <div>
                       <strong>Horaires</strong>
                       <p>24/7 - La Guilde ne dort jamais</p>
@@ -180,10 +171,10 @@ const Contact = () => {
               </div>
               <div className="card-body">
                 <p>
-                  Consultez notre <a href="/faq">FAQ</a> pour trouver des réponses rapides aux questions fréquentes.
+                  Bah force a toi.
                 </p>
                 <p>
-                  Pour les urgences, contactez directement un administrateur via le <a href="/chat">chat</a>.
+                  Pour les urgences, ne mourrez pas.
                 </p>
               </div>
             </div>
