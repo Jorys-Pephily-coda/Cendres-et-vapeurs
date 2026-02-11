@@ -1,6 +1,4 @@
-// Service pour l'authentification
-// Les fonctions prennent navigate en paramètre car les hooks React
-// ne peuvent pas être appelés dans des fonctions normales
+
 
 export const fetchLogin = async (
     username: string, 
@@ -23,9 +21,9 @@ export const fetchLogin = async (
             if (data.requires_2fa) {
                 navigate('/a2f', { state: { username: data.username } })
             } else {
-                if (setUser) setUser(data.results || data)
+                if (setUser) setUser(data.user)
                 sessionStorage.setItem('connected', 'true')
-                navigate('/dashboard')
+                navigate('/')
             }
             console.log('Login successful:', data)
         } else {
@@ -83,10 +81,10 @@ export const fetch2FA = async (
         
         if (response.ok) {
             const data = await response.json()
-            if (setUser) setUser(data.results || data)
+            if (setUser) setUser(data.user)
             sessionStorage.setItem('connected', 'true')
             console.log('2FA verification successful:', data)
-            navigate('/dashboard')
+            navigate('/')
         } else {
             const data = await response.json().catch(() => ({}))
             const errorMsg = data.error || 'Code invalide ou expiré'

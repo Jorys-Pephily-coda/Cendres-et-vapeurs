@@ -1,10 +1,12 @@
 import { fetch2FA } from "../service/Auth"
 import { useNavigate, useLocation } from "react-router-dom"
 import { useState } from "react"
+import { useAuth } from "../context/AuthContext"
 
 function A2f() {
     const navigate = useNavigate()
     const location = useLocation()
+    const { setUser } = useAuth()
     const [error, setError] = useState<string>('')
     const [loading, setLoading] = useState(false)
     
@@ -24,7 +26,7 @@ function A2f() {
         const code = formData.get('code') as string
         
         try {
-            await fetch2FA(username, code, navigate, setError)
+            await fetch2FA(username, code, navigate, setError, setUser)
         } catch (err) {
             setError('Une erreur est survenue')
         } finally {
