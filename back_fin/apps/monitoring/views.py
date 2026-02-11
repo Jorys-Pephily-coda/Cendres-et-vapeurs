@@ -1,6 +1,6 @@
 
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from django.http import StreamingHttpResponse
@@ -22,8 +22,8 @@ class ToxicityDataViewSet(viewsets.ReadOnlyModelViewSet):
             limit = 50
         return queryset[:limit]
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def current_toxicity(request):
-    # Toujours générer de nouvelles données
     latest = ToxicityData.generate_random_data()
     serializer = ToxicityDataSerializer(latest)
     return Response(serializer.data)
