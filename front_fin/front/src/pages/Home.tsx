@@ -1,4 +1,4 @@
-import "..styles/Home.css";
+import "../styles/Home.css";
 import { useAuth } from "../context/AuthContext";
 
 function Home() {
