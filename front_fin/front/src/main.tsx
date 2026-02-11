@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client'
-import {createHashRouter, RouterProvider} from 'react-router-dom'
+import {createBrowserRouter, createHashRouter, RouterProvider} from 'react-router-dom'
 import './index.css'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -16,7 +16,7 @@ import Toxicite from './pages/Toxicite'
 import Home from './pages/Home'
 
 
-const router = createHashRouter([
+const router = createBrowserRouter([
   { 
     path: '/',
     children: [
