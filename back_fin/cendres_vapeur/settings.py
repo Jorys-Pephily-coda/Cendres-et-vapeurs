@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'apps.monitoring',
     'apps.contact',
     'apps.logs',
+    'apps.utils',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

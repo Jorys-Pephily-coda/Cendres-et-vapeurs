@@ -15,8 +15,8 @@ class Command(BaseCommand):
         self.stdout.write('Seeding database...')
         self.stdout.write('Creating users...')
         admin = User.objects.create_superuser(
-            username='admin',
-            email='admin@cendresetvapeur.zone',
+            username='admin1',
+            email='nawfel.dahri14@gmail.com',
             password='admin123',
             role=User.Role.ADMIN
         )

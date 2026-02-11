@@ -78,11 +78,25 @@ python manage.py migrate
 python manage.py createsuperuser
 ```
 
-### 7. Charger des données de test (optionnel)
+### 7. Remplir la base de données avec des données de test (optionnel)
 
 ```bash
-python manage.py loaddata seed_data.json
+python manage.py seed_db
 ```
+
+Cette commande va créer automatiquement :
+- 3 utilisateurs (admin, editor, user)
+- 10 produits avec votes
+- 2 codes de réduction
+- 5 événements calendrier
+- 10 notes de quart
+- 5 données de toxicité
+- 10 logs d'activité
+
+**Identifiants créés :**
+- Admin : `admin@test.com` / `admin123`
+- Editor : `editor@test.com` / `editor123`
+- User : `user@test.com` / `user123`
 
 ### 8. Lancer le serveur
 
