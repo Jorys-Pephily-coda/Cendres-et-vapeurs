@@ -64,7 +64,8 @@ export const fetchRegister = async (
 export const fetch2FA = async (
     username: string, 
     code: string,
-    navigate: (path: string, options?: any) => void
+    navigate: (path: string, options?: any) => void,
+    setError?: (error: string) => void
 ) => {
     try {
         const response = await fetch('http://localhost:8000/api/auth/verify-2fa/', {
@@ -81,10 +82,14 @@ export const fetch2FA = async (
             console.log('2FA verification successful:', data)
             navigate('/dashboard', { state: { user: username } })
         } else {
-            console.error('2FA verification failed:', response.statusText)
+            const data = await response.json().catch(() => ({}))
+            const errorMsg = data.error || 'Code invalide ou expiré'
+            console.error('2FA verification failed:', errorMsg)
+            if (setError) setError(errorMsg)
         }
     } catch (error) {
         console.error('Error during 2FA verification:', error)
+        if (setError) setError('Erreur de connexion au serveur')
     }
 }
     

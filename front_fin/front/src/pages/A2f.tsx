@@ -1,23 +1,64 @@
 import { fetch2FA } from "../service/Auth"
-import { useNavigate } from "react-router-dom"
+import { useNavigate, useLocation } from "react-router-dom"
+import { useState } from "react"
 
 function A2f() {
-
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        const navigate = useNavigate()
-        event.preventDefault()
-        const formData = new FormData(event.currentTarget)
-        const username = formData.get('username') as string
-        const code = formData.get('code') as string
-        fetch2FA(username, code, navigate)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const [error, setError] = useState<string>('')
+    const [loading, setLoading] = useState(false)
+    
+    // Récupérer l'username passé depuis Login
+    const username = location.state?.username
+    
+    // Si pas d'username, rediriger vers login
+    if (!username) {
+        navigate('/login')
+        return null
     }
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        setError('') // Reset l'erreur
+        setLoading(true)
+        
+        const formData = new FormData(event.currentTarget)
+        const code = formData.get('code') as string
+        
+        try {
+            await fetch2FA(username, code, navigate, setError)
+        } catch (err) {
+            setError('Une erreur est survenue')
+        } finally {
+            setLoading(false)
+        }
+    }
+    
     return (
         <div className="a2f">
-            <h1>2FA</h1>
+            <h1>Vérification 2FA</h1>
+            <p>Un code a été envoyé à votre email</p>
+            <p>Utilisateur: <strong>{username}</strong></p>
+            
+            {error && (
+                <div style={{ color: 'red', marginBottom: '10px', padding: '10px', border: '1px solid red' }}>
+                    {error}
+                </div>
+            )}
+            
             <form className="a2f-form" onSubmit={handleSubmit}>
                 <label htmlFor="code">Code de vérification :</label>
-                <input type="text" id="code" name="code" required />
-                <button type="submit">Vérifier</button>
+                <input 
+                    type="text" 
+                    id="code" 
+                    name="code" 
+                    required 
+                    placeholder="Entrez le code à 6 chiffres"
+                    disabled={loading}
+                />
+                <button type="submit" disabled={loading}>
+                    {loading ? 'Vérification...' : 'Vérifier'}
+                </button>
             </form>
         </div>
     )
