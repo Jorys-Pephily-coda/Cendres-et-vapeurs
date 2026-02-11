@@ -64,7 +64,6 @@ function Home() {
 
         if (!mounted) return;
 
-        // Adapter les données backend au format attendu par le frontend
         const formattedData = {
           co2_level: data.carbon_level ?? 400,
           temperature: data.temperature ?? 20,
