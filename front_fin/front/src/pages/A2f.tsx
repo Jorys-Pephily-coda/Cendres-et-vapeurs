@@ -1,8 +1,18 @@
+import { fetch2FA } from "../service/Auth"
+
 function A2f() {
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault()
+        const formData = new FormData(event.currentTarget)
+        const username = formData.get('username') as string
+        const code = formData.get('code') as string
+        fetch2FA(username, code)
+    }
     return (
         <div className="a2f">
             <h1>2FA</h1>
-            <form className="a2f-form">
+            <form className="a2f-form" onSubmit={handleSubmit}>
                 <label htmlFor="code">Code de vérification :</label>
                 <input type="text" id="code" name="code" required />
                 <button type="submit">Vérifier</button>

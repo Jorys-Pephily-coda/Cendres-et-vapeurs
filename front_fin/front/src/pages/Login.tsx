@@ -1,6 +1,8 @@
 import { redirect } from "react-router"
 import { useNavigate } from "react-router-dom"
 
+const navigate = useNavigate()
+
 function Login() {
 
     const navigate = useNavigate()
@@ -11,34 +13,10 @@ function Login() {
         const username = formData.get('username') as string
         const password = formData.get('password') as string
         fetchLogin(username, password)
+
     }
 
-    const fetchLogin = async (username: string, password: string) => {
-        try {
-            const response = await fetch('http://localhost:8000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include',
-            })
-            
-            if (response.ok) {
-                const data = await response.json()
-                if (data.requires_2fa) {
-                    navigate('/a2f')
-                } else {
-                    navigate('/dashboard', { state: { user: data.username } })
-                }
-                console.log('Login successful:', data)
-            } else {
-                console.error('Login failed:', response.statusText)
-            }
-        } catch (error) {
-            console.error('Error during login:', error)
-        }
-    }
+    
 
     return (
         <div className="login">
