@@ -1,40 +1,47 @@
- import { useNavigate } from 'react-router-dom'
+// Service pour l'authentification
+// Les fonctions prennent navigate en paramètre car les hooks React
+// ne peuvent pas être appelés dans des fonctions normales
 
-
-export const fetchLogin = async (username: string, password: string) => {
-    const navigate = useNavigate()
-
-        try {
-            const response = await fetch('http://localhost:8000/api/auth/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password }),
-                credentials: 'include',
-            })
-            
-            if (response.ok) {
-                const data = await response.json()
-                if (data.requires_2fa) {
-                    navigate('/a2f')
-                } else {
-                    navigate('/dashboard', { state: { user: data.username } })
-                }
-                console.log('Login successful:', data)
-            } else {
-                console.error('Login failed:', response.statusText)
-            }
-        } catch (error) {
-            console.error('Error during login:', error)
-        }
-    }
-
-export const fetchRegister = async (username: string, email: string, password: string, password_confirm: string) => {
-    const navigate = useNavigate()
-
+export const fetchLogin = async (
+    username: string, 
+    password: string,
+    navigate: (path: string, options?: any) => void
+) => {
     try {
-        const response = await fetch('http://localhost:8000/api/auth/register', {
+        const response = await fetch('http://localhost:8000/api/auth/login/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password }),
+            credentials: 'include',
+        })
+        
+        if (response.ok) {
+            const data = await response.json()
+            if (data.requires_2fa) {
+                navigate('/a2f', { state: { username: data.username } })
+            } else {
+                navigate('/dashboard', { state: { user: data.username } })
+            }
+            console.log('Login successful:', data)
+        } else {
+            console.error('Login failed:', response.statusText)
+        }
+    } catch (error) {
+        console.error('Error during login:', error)
+    }
+}
+
+export const fetchRegister = async (
+    username: string, 
+    email: string, 
+    password: string, 
+    password_confirm: string,
+    navigate: (path: string, options?: any) => void
+) => {
+    try {
+        const response = await fetch('http://localhost:8000/api/auth/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -54,10 +61,11 @@ export const fetchRegister = async (username: string, email: string, password: s
     }
 }
 
-
-export const fetch2FA = async (username: string, code: string) => {
-    const navigate = useNavigate()
-
+export const fetch2FA = async (
+    username: string, 
+    code: string,
+    navigate: (path: string, options?: any) => void
+) => {
     try {
         const response = await fetch('http://localhost:8000/api/auth/verify-2fa/', {
             method: 'POST',

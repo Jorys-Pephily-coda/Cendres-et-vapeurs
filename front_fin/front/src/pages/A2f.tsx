@@ -1,13 +1,15 @@
 import { fetch2FA } from "../service/Auth"
+import { useNavigate } from "react-router-dom"
 
 function A2f() {
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        const navigate = useNavigate()
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
         const username = formData.get('username') as string
         const code = formData.get('code') as string
-        fetch2FA(username, code)
+        fetch2FA(username, code, navigate)
     }
     return (
         <div className="a2f">
