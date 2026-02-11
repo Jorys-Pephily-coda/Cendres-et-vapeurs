@@ -1,0 +1,48 @@
+.admin-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-xl);
+}
+
+.admin-card {
+  text-align: center;
+  padding: var(--spacing-xl);
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+}
+
+.admin-card:hover {
+  transform: translateY(-10px);
+  box-shadow: var(--shadow-glow);
+  color: inherit;
+}
+
+.admin-card-icon {
+  font-size: 4rem;
+  margin-bottom: var(--spacing-md);
+}
+
+.admin-card h3 {
+  color: var(--color-brass);
+  margin-bottom: var(--spacing-sm);
+}
+
+.admin-card p {
+  color: var(--color-smoke);
+  margin: 0;
+}
+
+.form-control-sm {
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
+table .btn {
+  margin: 0 0.25rem;
+}

@@ -1,0 +1,26 @@
+.contact-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+}
+
+.contact-info-item {
+  display: flex;
+  gap: var(--spacing-md);
+}
+
+.contact-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.contact-info-item strong {
+  display: block;
+  color: var(--color-brass);
+  margin-bottom: var(--spacing-xs);
+}
+
+.contact-info-item p {
+  margin: 0;
+  color: var(--color-smoke);
+}
