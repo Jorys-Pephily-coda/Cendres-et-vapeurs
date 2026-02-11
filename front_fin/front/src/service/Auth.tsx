@@ -1,8 +1,9 @@
  import { useNavigate } from 'react-router-dom'
 
-const navigate = useNavigate()
 
 export const fetchLogin = async (username: string, password: string) => {
+    const navigate = useNavigate()
+
         try {
             const response = await fetch('http://localhost:8000/api/auth/login', {
                 method: 'POST',
@@ -30,6 +31,8 @@ export const fetchLogin = async (username: string, password: string) => {
     }
 
 export const fetchRegister = async (username: string, email: string, password: string, password_confirm: string) => {
+    const navigate = useNavigate()
+
     try {
         const response = await fetch('http://localhost:8000/api/auth/register', {
             method: 'POST',
@@ -53,6 +56,8 @@ export const fetchRegister = async (username: string, email: string, password: s
 
 
 export const fetch2FA = async (username: string, code: string) => {
+    const navigate = useNavigate()
+
     try {
         const response = await fetch('http://localhost:8000/api/auth/verify-2fa/', {
             method: 'POST',
