@@ -10,9 +10,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container navbar-container">
         <Link to="/" className="navbar-brand">
-          <span className="brand-icon">⚙</span>
           <span className="brand-text">Cendres et Vapeur</span>
-          <span className="brand-icon">⚙</span>
         </Link>
 
         <ul className="navbar-nav">
@@ -31,7 +29,7 @@ const Navbar = () => {
           {user ? (
             <>
               <Link to="/cart" className="nav-icon" title="Panier">
-                🛒
+                Panier
               </Link>
               <Link to="/profile" className="navbar-user">
                 <span className="user-name">{user.username}</span>

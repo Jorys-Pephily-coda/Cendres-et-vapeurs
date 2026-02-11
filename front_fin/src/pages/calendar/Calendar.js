@@ -217,17 +217,17 @@ const Calendar = () => {
 
   const getShiftIcon = (shift) => {
     const icons = {
-      morning: '🌅',
-      evening: '🌆',
+      morning: 'Matin',
+      evening: 'Soir',
     };
-    return icons[shift] || '📝';
+    return icons[shift] || 'Note';
   };
 
   return (
     <div className="page">
       <div className="container-fluid">
         <div className="page-header">
-          <h1 className="page-title">📅 Calendrier</h1>
+          <h1 className="page-title">Calendrier</h1>
           <div className="calendar-controls">
             <button onClick={goToPreviousMonth} className="btn btn-secondary">← Précédent</button>
             <button onClick={goToToday} className="btn btn-primary">Aujourd'hui</button>
@@ -472,10 +472,10 @@ const Calendar = () => {
                     {isEditor() && (
                       <div className="modal-actions">
                         <button onClick={startEditingEvent} className="btn btn-primary">
-                          ✏️ Modifier
+                          Modifier
                         </button>
                         <button onClick={() => deleteEvent(selectedEvent.id)} className="btn btn-danger">
-                          🗑️ Supprimer
+                          Supprimer
                         </button>
                       </div>
                     )}
@@ -546,7 +546,7 @@ const Calendar = () => {
                     
                     <div className="modal-actions">
                       <button type="submit" className="btn btn-primary">
-                        💾 Enregistrer
+                        Enregistrer
                       </button>
                       <button type="button" onClick={() => setIsEditingEvent(false)} className="btn btn-secondary">
                         Annuler

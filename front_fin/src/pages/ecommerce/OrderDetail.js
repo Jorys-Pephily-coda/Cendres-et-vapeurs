@@ -136,7 +136,7 @@ const OrderDetail = () => {
                   onClick={downloadInvoice}
                   className="btn btn-primary btn-block"
                 >
-                  📄 Télécharger la facture
+                  Télécharger la facture
                 </button>
               </div>
             </div>

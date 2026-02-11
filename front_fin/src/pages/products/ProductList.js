@@ -107,7 +107,7 @@ const ProductList = () => {
           </div>
         ) : products.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">📦</div>
+            <div className="empty-state-icon"></div>
             <h3>Aucun produit trouvé</h3>
             <p>Modifiez vos filtres pour voir plus de résultats</p>
           </div>

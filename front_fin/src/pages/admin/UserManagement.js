@@ -63,7 +63,7 @@ const UserManagement = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">👥 Gestion des Utilisateurs</h1>
+          <h1 className="page-title">Gestion des Utilisateurs</h1>
           <p className="page-subtitle">{users.length} membre(s)</p>
         </div>
 

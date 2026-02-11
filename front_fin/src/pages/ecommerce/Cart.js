@@ -66,7 +66,7 @@ const Cart = () => {
       <div className="page">
         <div className="container">
           <div className="empty-state">
-            <div className="empty-state-icon">🛒</div>
+            <div className="empty-state-icon"></div>
             <h2>Votre panier est vide</h2>
             <p>Découvrez nos produits et ajoutez-en à votre panier</p>
             <button onClick={() => navigate('/products')} className="btn btn-primary">

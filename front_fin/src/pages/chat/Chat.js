@@ -81,7 +81,7 @@ const Chat = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">💬 Chat Administratif</h1>
+          <h1 className="page-title">Chat Administratif</h1>
           <p className="page-subtitle">Communication réservée aux éditeurs et administrateurs</p>
         </div>
 

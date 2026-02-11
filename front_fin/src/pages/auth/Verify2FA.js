@@ -38,7 +38,7 @@ const Verify2FA = () => {
         <div className="auth-container">
           <div className="auth-card card">
             <div className="auth-header">
-              <h1>🔐 Vérification 2FA 🔐</h1>
+              <h1>Vérification 2FA</h1>
               <p>Un code a été envoyé à votre email</p>
             </div>
 

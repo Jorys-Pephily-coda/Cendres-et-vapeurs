@@ -108,16 +108,6 @@ const Login = () => {
               </p>
             </div>
           </div>
-
-          <div className="auth-info card">
-            <h3>Comptes de test</h3>
-            <ul>
-              <li><strong>Admin:</strong> admin / admin123</li>
-              <li><strong>Éditeur:</strong> editeur / editeur123</li>
-              <li><strong>Utilisateur:</strong> utilisateur / user123</li>
-              <li><strong>Invité:</strong> invite / invite123</li>
-            </ul>
-          </div>
         </div>
       </div>
     </div>

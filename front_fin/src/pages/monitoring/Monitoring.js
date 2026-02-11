@@ -91,7 +91,7 @@ const Monitoring = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">☣️ Moniteur de Toxicité</h1>
+          <h1 className="page-title">Moniteur de Toxicité</h1>
           <p className="page-subtitle">Surveillance en temps réel</p>
         </div>
 
@@ -103,7 +103,7 @@ const Monitoring = () => {
 
         <div className="monitoring-grid">
           <div className="monitor-card card">
-            <div className="monitor-icon">💨</div>
+            <div className="monitor-icon"></div>
             <div className="monitor-label">CO₂</div>
             <div className={`monitor-value ${getStatusClass(currentData.co2_level, { warning: 800, danger: 1000 })}`}>
               {currentData.co2_level.toFixed(1)}
@@ -118,7 +118,7 @@ const Monitoring = () => {
           </div>
 
           <div className="monitor-card card">
-            <div className="monitor-icon">🌡️</div>
+            <div className="monitor-icon"></div>
             <div className="monitor-label">Température</div>
             <div className={`monitor-value ${getStatusClass(currentData.temperature, { warning: 25, danger: 30 })}`}>
               {currentData.temperature.toFixed(1)}
@@ -133,7 +133,7 @@ const Monitoring = () => {
           </div>
 
           <div className="monitor-card card">
-            <div className="monitor-icon">💧</div>
+            <div className="monitor-icon"></div>
             <div className="monitor-label">Humidité</div>
             <div className={`monitor-value ${getStatusClass(currentData.humidity, { warning: 70, danger: 85 })}`}>
               {currentData.humidity.toFixed(1)}
@@ -148,7 +148,7 @@ const Monitoring = () => {
           </div>
 
           <div className="monitor-card card">
-            <div className="monitor-icon">🌫️</div>
+            <div className="monitor-icon"></div>
             <div className="monitor-label">Qualité de l'air</div>
             <div className={`monitor-value ${getStatusClass(currentData.air_quality_index, { warning: 100, danger: 150 })}`}>
               {currentData.air_quality_index.toFixed(0)}

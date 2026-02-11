@@ -132,7 +132,7 @@ const ProductManagement = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">📦 Gestion des Produits</h1>
+          <h1 className="page-title">Gestion des Produits</h1>
           <button
             onClick={() => setShowForm(!showForm)}
             className="btn btn-primary"
@@ -231,7 +231,7 @@ const ProductManagement = () => {
                           onChange={(e) => setImageFile(e.target.files[0])}
                         />
                         <small className="text-muted d-block mt-1">
-                          📎 Choisir un fichier ou Ctrl+V pour coller
+                          Choisir un fichier ou Ctrl+V pour coller
                         </small>
                       </div>
                       {imageFile && (

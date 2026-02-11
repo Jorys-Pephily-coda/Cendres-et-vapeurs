@@ -29,7 +29,7 @@ const Home = () => {
           <h2 className="section-title">Services de la Colonie</h2>
           <div className="grid grid-3">
             <div className="feature-card card">
-              <div className="feature-icon">🛒</div>
+              <div className="feature-icon"></div>
               <h3>Boutique</h3>
               <p>
                 Échangez vos ressources contre des équipements essentiels à la survie.
@@ -39,7 +39,7 @@ const Home = () => {
             </div>
 
             <div className="feature-card card">
-              <div className="feature-icon">📅</div>
+              <div className="feature-icon"></div>
               <h3>Planning</h3>
               <p>
                 Consultez les quarts de travail et les événements de la colonie.
@@ -49,7 +49,7 @@ const Home = () => {
             </div>
 
             <div className="feature-card card">
-              <div className="feature-icon">☣️</div>
+              <div className="feature-icon"></div>
               <h3>Moniteur</h3>
               <p>
                 Surveillez en temps réel les niveaux de toxicité de l'air.
@@ -65,19 +65,19 @@ const Home = () => {
         <div className="container">
           <div className="stats-grid">
             <div className="stat-card">
-              <div className="stat-value">⚙ 100+</div>
+              <div className="stat-value">100+</div>
               <div className="stat-label">Produits</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">👥 500+</div>
+              <div className="stat-value">500+</div>
               <div className="stat-label">Survivants</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">🔥 24/7</div>
+              <div className="stat-value">24/7</div>
               <div className="stat-label">Surveillance</div>
             </div>
             <div className="stat-card">
-              <div className="stat-value">🛡️ Sûr</div>
+              <div className="stat-value">Sûr</div>
               <div className="stat-label">Sécurisé</div>
             </div>
           </div>

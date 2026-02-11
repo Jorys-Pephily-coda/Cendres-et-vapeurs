@@ -111,7 +111,6 @@ const ProductDetail = () => {
                   />
                 ) : (
                   <div className="product-detail-image-placeholder">
-                    📦
                   </div>
                 )}
               </div>

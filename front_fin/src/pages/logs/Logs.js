@@ -26,18 +26,18 @@ const Logs = () => {
 
   const getActionIcon = (actionType) => {
     const icons = {
-      login: '🔐',
-      logout: '🚪',
-      register: '📝',
-      order_created: '🛒',
-      product_created: '📦',
-      product_updated: '✏️',
-      product_deleted: '🗑️',
-      user_updated: '👤',
-      vote_added: '❤️',
-      vote_removed: '💔',
+      login: '[Connexion]',
+      logout: '[Déconnexion]',
+      register: '[Inscription]',
+      order_created: '[Commande]',
+      product_created: '[Produit créé]',
+      product_updated: '[Produit modifié]',
+      product_deleted: '[Produit supprimé]',
+      user_updated: '[Utilisateur]',
+      vote_added: '[Vote ajouté]',
+      vote_removed: '[Vote retiré]',
     };
-    return icons[actionType] || '📋';
+    return icons[actionType] || '[Action]';
   };
 
   const filteredLogs = filter
@@ -51,7 +51,7 @@ const Logs = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">📜 Journal de la Colonie</h1>
+          <h1 className="page-title">Journal de la Colonie</h1>
           <p className="page-subtitle">Activités récentes de la Zone Franche</p>
         </div>
 
@@ -103,12 +103,12 @@ const Logs = () => {
           </div>
           <div className="card-body">
             <div className="logs-legend">
-              <div className="legend-item">🔐 Connexion</div>
-              <div className="legend-item">🚪 Déconnexion</div>
-              <div className="legend-item">📝 Inscription</div>
-              <div className="legend-item">🛒 Commande</div>
-              <div className="legend-item">📦 Produit</div>
-              <div className="legend-item">❤️ Vote</div>
+              <div className="legend-item">Connexion</div>
+              <div className="legend-item">Déconnexion</div>
+              <div className="legend-item">Inscription</div>
+              <div className="legend-item">Commande</div>
+              <div className="legend-item">Produit</div>
+              <div className="legend-item">Vote</div>
             </div>
           </div>
         </div>

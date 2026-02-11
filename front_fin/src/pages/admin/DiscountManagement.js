@@ -87,7 +87,7 @@ const DiscountManagement = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">🎟️ Gestion des Codes Promo</h1>
+          <h1 className="page-title">Gestion des Codes Promo</h1>
           <button
             onClick={() => setShowForm(!showForm)}
             className="btn btn-primary"

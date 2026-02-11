@@ -46,7 +46,7 @@ const Contact = () => {
     <div className="page">
       <div className="container">
         <div className="page-header">
-          <h1 className="page-title">📮 Contactez la Guilde</h1>
+          <h1 className="page-title">Contactez la Guilde</h1>
           <p className="page-subtitle">Envoyez-nous un message</p>
         </div>
 
@@ -148,7 +148,7 @@ const Contact = () => {
               <div className="card-body">
                 <div className="contact-info">
                   <div className="contact-info-item">
-                    <div className="contact-icon">📍</div>
+                    <div className="contact-icon"></div>
                     <div>
                       <strong>Adresse</strong>
                       <p>Zone Franche Cendres et Vapeur<br />Secteur 7, Ruines du Vieux Monde</p>
@@ -156,7 +156,7 @@ const Contact = () => {
                   </div>
 
                   <div className="contact-info-item">
-                    <div className="contact-icon">📧</div>
+                    <div className="contact-icon"></div>
                     <div>
                       <strong>Email</strong>
                       <p>contact@cendres-vapeur.zone</p>

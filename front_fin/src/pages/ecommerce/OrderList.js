@@ -40,7 +40,7 @@ const OrderList = () => {
 
         {orders.length === 0 ? (
           <div className="empty-state">
-            <div className="empty-state-icon">📦</div>
+            <div className="empty-state-icon"></div>
             <h3>Aucune commande</h3>
             <p>Vous n'avez pas encore passé de commande</p>
             <Link to="/products" className="btn btn-primary">

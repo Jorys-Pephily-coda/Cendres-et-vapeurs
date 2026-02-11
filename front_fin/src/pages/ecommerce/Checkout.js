@@ -195,7 +195,7 @@ const Checkout = () => {
 
             <div className="card mt-3">
               <div className="card-body">
-                <h4>🔒 Paiement sécurisé</h4>
+                <h4>Paiement sécurisé</h4>
                 <p className="text-muted">
                   <small>
                     Vos transactions sont sécurisées par la Guilde.

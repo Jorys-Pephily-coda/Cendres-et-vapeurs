@@ -13,49 +13,49 @@ const Dashboard = () => {
 
         <div className="admin-grid">
           <Link to="/admin/users" className="admin-card card">
-            <div className="admin-card-icon">👥</div>
+            <div className="admin-card-icon"></div>
             <h3>Utilisateurs</h3>
             <p>Gérer les membres de la colonie</p>
           </Link>
 
           <Link to="/admin/products" className="admin-card card">
-            <div className="admin-card-icon">📦</div>
+            <div className="admin-card-icon"></div>
             <h3>Produits</h3>
             <p>Gérer le catalogue de la boutique</p>
           </Link>
 
           <Link to="/admin/discounts" className="admin-card card">
-            <div className="admin-card-icon">🎟️</div>
+            <div className="admin-card-icon"></div>
             <h3>Codes Promo</h3>
             <p>Gérer les remises et promotions</p>
           </Link>
 
           <Link to="/orders" className="admin-card card">
-            <div className="admin-card-icon">🛒</div>
+            <div className="admin-card-icon"></div>
             <h3>Commandes</h3>
             <p>Voir toutes les commandes</p>
           </Link>
 
           <Link to="/calendar" className="admin-card card">
-            <div className="admin-card-icon">📅</div>
+            <div className="admin-card-icon"></div>
             <h3>Planning</h3>
             <p>Gérer les événements</p>
           </Link>
 
           <Link to="/chat" className="admin-card card">
-            <div className="admin-card-icon">💬</div>
+            <div className="admin-card-icon"></div>
             <h3>Chat</h3>
             <p>Communication administrative</p>
           </Link>
 
           <Link to="/monitoring" className="admin-card card">
-            <div className="admin-card-icon">☣️</div>
+            <div className="admin-card-icon"></div>
             <h3>Monitoring</h3>
             <p>Surveillance de la toxicité</p>
           </Link>
 
           <Link to="/logs" className="admin-card card">
-            <div className="admin-card-icon">📜</div>
+            <div className="admin-card-icon"></div>
             <h3>Logs</h3>
             <p>Journal des activités</p>
           </Link>
