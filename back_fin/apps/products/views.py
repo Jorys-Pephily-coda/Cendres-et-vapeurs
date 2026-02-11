@@ -20,14 +20,16 @@ class ProductViewSet(viewsets.ModelViewSet):
         queryset = Product.objects.all()
         if not (self.request.user.is_authenticated and self.request.user.is_editor):
             queryset = queryset.filter(is_active=True)
+        
         category = self.request.query_params.get('category', None)
         if category:
             queryset = queryset.filter(category=category)
-        sort_by_votes = self.request.query_params.get('sort_by_votes', None)
-        if sort_by_votes == 'true':
-            queryset = queryset.annotate(
-                vote_count_db=Count('votes')
-            ).order_by('-vote_count_db', '-created_at')
+        
+        # Toujours trier par nombre de votes décroissant par défaut
+        queryset = queryset.annotate(
+            vote_count_db=Count('votes')
+        ).order_by('-vote_count_db', '-created_at')
+        
         return queryset
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
