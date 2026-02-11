@@ -23,10 +23,8 @@ class ToxicityDataViewSet(viewsets.ReadOnlyModelViewSet):
         return queryset[:limit]
 @api_view(['GET'])
 def current_toxicity(request):
-
-    latest = ToxicityData.objects.first()
-    if not latest:
-        latest = ToxicityData.generate_random_data()
+    # Toujours générer de nouvelles données
+    latest = ToxicityData.generate_random_data()
     serializer = ToxicityDataSerializer(latest)
     return Response(serializer.data)
 @api_view(['POST'])
