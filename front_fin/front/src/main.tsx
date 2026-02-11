@@ -16,6 +16,10 @@ import Toxicite from './pages/Toxicite'
 import Home from './pages/Home'
 import { AuthProvider } from './context/AuthContext'
 import AuthMiddleware from './middleware/Authmiddleware'
+import Users from './pages/dashboard/Users'
+import Products from './pages/dashboard/Products'
+import DiscountCodes from './pages/dashboard/DiscountCodes'
+import Orders from './pages/dashboard/Orders'
 
 
 const router = createBrowserRouter([
@@ -31,6 +35,10 @@ const router = createBrowserRouter([
       { path: '/commerce', element: <Commerce />},
       { path: '/contact', element: <Contact />},
       { path: '/dashboard', element: <AuthMiddleware><Dashboard /></AuthMiddleware> },
+      { path: '/dashboard/users', element: <AuthMiddleware><Users /></AuthMiddleware> },
+      { path: '/dashboard/products', element: <AuthMiddleware><Products /></AuthMiddleware> },
+      { path: '/dashboard/discount-codes', element: <AuthMiddleware><DiscountCodes /></AuthMiddleware> },
+      { path: '/dashboard/orders', element: <AuthMiddleware><Orders /></AuthMiddleware> },
       { path: '/log', element: <AuthMiddleware><Log /></AuthMiddleware> },
       { path: '/paiement', element: <AuthMiddleware><Paiement /></AuthMiddleware> },
       { path: '/panier', element: <AuthMiddleware><Panier /></AuthMiddleware> },

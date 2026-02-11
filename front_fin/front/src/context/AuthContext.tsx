@@ -1,9 +1,20 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 
 const AuthContext = createContext<any>(null);
 
 export const AuthProvider = ({ children }: any) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(() => {
+    const savedUser = sessionStorage.getItem('user');
+    return savedUser ? JSON.parse(savedUser) : null;
+  });
+
+  useEffect(() => {
+    if (user) {
+      sessionStorage.setItem('user', JSON.stringify(user));
+    } else {
+      sessionStorage.removeItem('user');
+    }
+  }, [user]);
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
