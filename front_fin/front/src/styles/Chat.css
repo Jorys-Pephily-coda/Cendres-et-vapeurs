@@ -1,0 +1,159 @@
+.chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 90vh;
+    padding: 20px;
+    margin: 2%;
+}
+
+.chat-header {
+    margin-bottom: 1rem;
+}
+
+.chat-header h1 {
+    margin: 0 0 0.5rem 0;
+}
+
+.chat-header a {
+    color: #0d6efd;
+    text-decoration: none;
+}
+
+.chat-header a:hover {
+    text-decoration: underline;
+}
+
+.chat-messages {
+    flex: 1;
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    overflow-y: auto;
+    background-color: #000;
+    border: 5px solid transparent;
+    background:
+        #000 padding-box,
+        linear-gradient(
+            to right,
+            #6e422f,
+            #865841 21.6346%,
+            #8b5c47 44.2308%,
+            #dc987b 67.3077%,
+            #9c5a3a 83.6538%,
+            #a35d3c
+        )
+        border-box;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.chat-message {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    border: 1px solid #444;
+    color: #fff;
+}
+
+.chat-message.system {
+    background-color: #fff3cd;
+    color: #000;
+}
+
+.message-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.message-header strong {
+    color: #dc987b;
+}
+
+.role-badge {
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    color: #fff;
+}
+
+.role-badge.admin {
+    background-color: #dc3545;
+}
+
+.role-badge.editor {
+    background-color: #ffc107;
+}
+
+.role-badge.user {
+    background-color: #6c757d;
+}
+
+.message-time {
+    font-size: 12px;
+    color: #6c757d;
+    margin-left: auto;
+}
+
+.message-content {
+    margin-left: 10px;
+}
+
+.chat-form {
+    display: flex;
+    gap: 10px;
+}
+
+.chat-input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 15px;
+    border: 3px solid transparent;
+    background:
+        #1a1a1a padding-box,
+        linear-gradient(
+            to right,
+            #6e422f,
+            #865841 21.6346%,
+            #8b5c47 44.2308%,
+            #dc987b 67.3077%,
+            #9c5a3a 83.6538%,
+            #a35d3c
+        )
+        border-box;
+    color: #fff;
+    font-size: 14px;
+}
+
+.chat-input::placeholder {
+    color: #999;
+}
+
+.chat-input:focus {
+    outline: none;
+}
+
+.chat-button {
+    padding: 10px 20px;
+    background: linear-gradient(
+        to right,
+        #6e422f,
+        #865841 21.6346%,
+        #8b5c47 44.2308%,
+        #dc987b 67.3077%,
+        #9c5a3a 83.6538%,
+        #a35d3c
+    );
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.chat-button:hover {
+    opacity: 0.9;
+}
