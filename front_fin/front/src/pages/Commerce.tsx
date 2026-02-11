@@ -1,10 +1,28 @@
 import { useEffect, useState } from "react"
-import { fetchCommerce, addToCart } from "../service/Commerce"
+import { fetchCommerce, addToCart, voteProduct } from "../service/Commerce"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import '../styles/Commerce.css'
 
 function Commerce() {
     const [commerceData, setCommerceData] = useState<any>([])
     const [loading, setLoading] = useState(true)
+
+    const handleVote = async (productId: number) => {
+        const result = await voteProduct(productId)
+        if (result) {
+            setCommerceData((prevData: any) => ({
+                ...prevData,
+                results: prevData.results.map((product: any) => 
+                    product.id === productId 
+                        ? { ...product, has_voted: !product.has_voted }
+                        : product
+                )
+            }))
+        }
+    }
+
     useEffect(() => {
         const getCommerceData = async () => {
             const data = await fetchCommerce()
@@ -39,10 +57,24 @@ function Commerce() {
             </div>
             <div className="shop">
                 {commerceData.count > 0 ? (
-                    <ul>
-                        {commerceData.results.map((product: any) => (
-                            <li className="product-card" key={product.id}>
-                                <h3>{product.name}</h3>
+                        commerceData.results.map((product: any) => (
+                            <div className="product-card" key={product.id}>
+                                <div className="card-top">
+                                    <div className="blank-card"> </div>
+                                    <div className="product-name">
+                                        <h3>{product.name}</h3>
+                                    </div>
+                                    <button 
+                                    className="like-btn" 
+                                    onClick={() => handleVote(product.id)}
+                                    >
+                                    <FontAwesomeIcon 
+                                        icon={product.has_voted ? faHeartSolid : faHeartRegular} 
+                                        className={product.has_voted ? 'heart-filled' : 'heart-empty'}
+                                    />
+                                </button>
+                                </div>
+                                <img src={product.image_url} alt="on est pauvre on a pas mis l'image" className="product-image" />
                                 <p>{product.description}</p>
                                 <p>Price: ${product.current_price}</p>
                                 <p>Stock: {product.stock}</p>
@@ -54,9 +86,8 @@ function Commerce() {
                                     className="quantity-input"
                                 />
                                 <button className="panier" onClick={() => addToCart(product.id, 1)}>Ajouter au panier</button>
-                            </li>
-                        ))}
-                    </ul>
+                            </div>
+                        ))
                     ) : (
                     <p>Ya pas de panneau</p>
                 )}

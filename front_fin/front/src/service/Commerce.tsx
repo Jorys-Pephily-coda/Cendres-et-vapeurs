@@ -1,6 +1,6 @@
 const fetchCommerce = async () => {
     try {
-        const response = await fetch('http://localhost:8000/api/products/', {
+        const response = await fetch('http://localhost:8000/api/products/?sort_by_votes=true', {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
@@ -43,4 +43,25 @@ const addToCart = async (productId: number, quantity: number) => {
     }
 }
 
-export { fetchCommerce, addToCart }
+const voteProduct = async (productId: number) => {
+    try {
+        const response = await fetch(`http://localhost:8000/api/products/${productId}/vote/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log('Product voted successfully:', data)
+            return data
+        } else {
+            console.error('Failed to vote for product:', response.statusText)
+        }
+    } catch (error) {
+        console.error('Error during voting for product:', error)
+    }
+}
+
+export { fetchCommerce, addToCart, voteProduct }
