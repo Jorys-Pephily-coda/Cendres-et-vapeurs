@@ -15,7 +15,7 @@ load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-SECRET_KEY           = os.getenv("SECRET_KEY", "changeme")
+SECRET_KEY           = os.getenv("SECRET_KEY", "changeme_super_secret")
 ALGORITHM            = os.getenv("ALGORITHM", "HS256")
 TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE", 30))
 
