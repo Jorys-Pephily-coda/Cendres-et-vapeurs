@@ -5,7 +5,8 @@
 export const fetchLogin = async (
     username: string, 
     password: string,
-    navigate: (path: string, options?: any) => void
+    navigate: (path: string, options?: any) => void,
+    setUser?: (user: any) => void
 ) => {
     try {
         const response = await fetch('http://localhost:8000/api/auth/login/', {
@@ -22,7 +23,10 @@ export const fetchLogin = async (
             if (data.requires_2fa) {
                 navigate('/a2f', { state: { username: data.username } })
             } else {
-                navigate('/dashboard', { state: { user: data.username } })
+                // Enregistrer le user et marquer comme connecté
+                if (setUser) setUser(data.results || data)
+                sessionStorage.setItem('connected', 'true')
+                navigate('/dashboard')
             }
             console.log('Login successful:', data)
         } else {
@@ -65,7 +69,8 @@ export const fetch2FA = async (
     username: string, 
     code: string,
     navigate: (path: string, options?: any) => void,
-    setError?: (error: string) => void
+    setError?: (error: string) => void,
+    setUser?: (user: any) => void
 ) => {
     try {
         const response = await fetch('http://localhost:8000/api/auth/verify-2fa/', {
@@ -79,8 +84,11 @@ export const fetch2FA = async (
         
         if (response.ok) {
             const data = await response.json()
+            // Enregistrer le user et marquer comme connecté
+            if (setUser) setUser(data.results || data)
+            sessionStorage.setItem('connected', 'true')
             console.log('2FA verification successful:', data)
-            navigate('/dashboard', { state: { user: username } })
+            navigate('/dashboard')
         } else {
             const data = await response.json().catch(() => ({}))
             const errorMsg = data.error || 'Code invalide ou expiré'

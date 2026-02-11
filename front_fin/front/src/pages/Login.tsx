@@ -1,15 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 import { fetchLogin } from "../service/Auth"
+import { useAuth } from '../context/AuthContext'
 
 function Login() {
     const navigate = useNavigate()
+    const { setUser } = useAuth()
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
         const formData = new FormData(event.currentTarget)
         const username = formData.get('username') as string
         const password = formData.get('password') as string
-        fetchLogin(username, password, navigate)
+        fetchLogin(username, password, navigate, setUser)
     }
 
     

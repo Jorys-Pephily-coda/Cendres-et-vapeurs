@@ -8,10 +8,8 @@ function A2f() {
     const [error, setError] = useState<string>('')
     const [loading, setLoading] = useState(false)
     
-    // Récupérer l'username passé depuis Login
     const username = location.state?.username
     
-    // Si pas d'username, rediriger vers login
     if (!username) {
         navigate('/login')
         return null
@@ -19,7 +17,7 @@ function A2f() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault()
-        setError('') // Reset l'erreur
+        setError('')
         setLoading(true)
         
         const formData = new FormData(event.currentTarget)

@@ -14,31 +14,34 @@ import Panier from './pages/Panier'
 import Planning from './pages/Planning'
 import Toxicite from './pages/Toxicite'
 import Home from './pages/Home'
+import { AuthProvider } from './context/AuthContext'
+import AuthMiddleware from './middleware/Authmiddleware'
 
 
 const router = createBrowserRouter([
   { 
     path: '/',
     children: [
-      { path: '/', element: <Home /> },
       { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
       { path: '/a2f', element: <A2f /> },
-      { path: '/chat', element: <Chat /> },
-      { path: '/commerce', element: <Commerce /> },
-      { path: '/contact', element: <Contact /> },
-      { path: '/dashboard', element: <Dashboard /> },
-      { path: '/log', element: <Log /> },
-      { path: '/paiement', element: <Paiement /> },
-      { path: '/panier', element: <Panier /> },
-      { path: '/planning', element: <Planning /> },
-      { path: '/toxicite', element: <Toxicite /> },
+      
+      { path: '/', element: <Home /> },
+      { path: '/chat', element: <AuthMiddleware><Chat /></AuthMiddleware> },
+      { path: '/commerce', element: <Commerce />},
+      { path: '/contact', element: <Contact />},
+      { path: '/dashboard', element: <AuthMiddleware><Dashboard /></AuthMiddleware> },
+      { path: '/log', element: <AuthMiddleware><Log /></AuthMiddleware> },
+      { path: '/paiement', element: <AuthMiddleware><Paiement /></AuthMiddleware> },
+      { path: '/panier', element: <AuthMiddleware><Panier /></AuthMiddleware> },
+      { path: '/planning', element: <AuthMiddleware><Planning /></AuthMiddleware> },
+      { path: '/toxicite', element: <AuthMiddleware><Toxicite /></AuthMiddleware> },
     ]
   },
 ])
 
 createRoot(document.getElementById('root')!).render(
-
+  <AuthProvider>
     <RouterProvider router={router} />
-
+  </AuthProvider>
 )
