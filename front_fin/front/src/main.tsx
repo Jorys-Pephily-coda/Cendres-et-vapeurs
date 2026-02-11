@@ -9,11 +9,11 @@ import Commerce from './pages/Commerce'
 import Contact from './pages/Contact'
 import Dashboard from './pages/Dashboard'
 import Log from './pages/Log'
-import Paiement from './pages/Paiement'
 import Panier from './pages/Panier'
 import Planning from './pages/Planning'
 import Toxicite from './pages/Toxicite'
 import Home from './pages/Home'
+import Commande from './pages/Commande'
 import { AuthProvider } from './context/AuthContext'
 import AuthMiddleware from './middleware/Authmiddleware'
 import Users from './pages/dashboard/Users'
@@ -40,8 +40,8 @@ const router = createBrowserRouter([
       { path: '/dashboard/discount-codes', element: <AuthMiddleware><DiscountCodes /></AuthMiddleware> },
       { path: '/dashboard/orders', element: <AuthMiddleware><Orders /></AuthMiddleware> },
       { path: '/log', element: <AuthMiddleware><Log /></AuthMiddleware> },
-      { path: '/paiement', element: <AuthMiddleware><Paiement /></AuthMiddleware> },
       { path: '/panier', element: <AuthMiddleware><Panier /></AuthMiddleware> },
+      { path: '/commande', element: <AuthMiddleware><Commande /></AuthMiddleware> },
       { path: '/planning', element: <AuthMiddleware><Planning /></AuthMiddleware> },
       { path: '/toxicite', element: <AuthMiddleware><Toxicite /></AuthMiddleware> },
     ]
