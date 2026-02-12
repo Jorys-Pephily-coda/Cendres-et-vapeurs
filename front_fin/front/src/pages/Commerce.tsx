@@ -12,7 +12,7 @@ function Commerce() {
 
     const playLoadingSound = () => {
         const audio = new Audio(loadingSound)
-        audio.volume = 10.0
+        audio.volume = 1.0
         console.log('Tentative de lecture du son...')
         audio.play()
             .then(() => console.log('Son joué avec succès'))
