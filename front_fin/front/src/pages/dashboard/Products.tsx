@@ -16,6 +16,8 @@ function Products() {
         current_price: '',
         stock: '',
     });
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [imagePreview, setImagePreview] = useState<string | null>(null);
 
     useEffect(() => {
         if (user?.role !== 'ADMIN' && user?.role !== 'EDITOR') {
@@ -39,19 +41,42 @@ function Products() {
         }
     };
 
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setImageFile(file);
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                setImagePreview(reader.result as string);
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const url = editingProduct
             ? `http://localhost:8000/api/products/${editingProduct.id}/`
             : 'http://localhost:8000/api/products/';
-        const method = editingProduct ? 'PUT' : 'POST';
+        const method = editingProduct ? 'PATCH' : 'POST';
 
         try {
+            const formDataToSend = new FormData();
+            formDataToSend.append('name', formData.name);
+            formDataToSend.append('description', formData.description);
+            formDataToSend.append('category', formData.category);
+            formDataToSend.append('base_price', formData.base_price);
+            formDataToSend.append('current_price', formData.current_price);
+            formDataToSend.append('stock', formData.stock);
+            
+            if (imageFile) {
+                formDataToSend.append('image', imageFile);
+            }
+
             const response = await fetch(url, {
                 method,
-                headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
-                body: JSON.stringify(formData),
+                body: formDataToSend,
             });
             if (response.ok) {
                 fetchProducts();
@@ -72,6 +97,9 @@ function Products() {
             current_price: product.current_price,
             stock: product.stock,
         });
+        if (product.image) {
+            setImagePreview(product.image);
+        }
         setShowForm(true);
     };
 
@@ -99,6 +127,8 @@ function Products() {
             current_price: '',
             stock: '',
         });
+        setImageFile(null);
+        setImagePreview(null);
         setEditingProduct(null);
         setShowForm(false);
     };
@@ -166,8 +196,26 @@ function Products() {
                             required
                         />
                     </div>
-                    <button type="submit">{editingProduct ? 'Modifier' : 'Créer'}</button>
-                    <button type="button" onClick={resetForm}>Annuler</button>
+                    <div>
+                        <label>Image du produit:</label>
+                        <input
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageChange}
+                        />
+                        {imagePreview && (
+                            <div style={{ marginTop: '10px' }}>
+                                <img 
+                                    src={imagePreview} 
+                                    alt="Aperçu" 
+                                    style={{ maxWidth: '200px', maxHeight: '200px' }}
+                                />
+                            </div>
+                        )}
+                    </div>
+                    <button type="submit">
+                        {editingProduct ? 'Mettre à jour' : 'Créer'}
+                    </button>
                 </form>
             )}
 
@@ -176,6 +224,7 @@ function Products() {
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Image</th>
                         <th>Nom</th>
                         <th>Catégorie</th>
                         <th>Prix</th>
@@ -188,6 +237,17 @@ function Products() {
                     {products.map((p) => (
                         <tr key={p.id}>
                             <td>{p.id}</td>
+                            <td>
+                                {p.image ? (
+                                    <img 
+                                        src={p.image} 
+                                        alt={p.name} 
+                                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                    />
+                                ) : (
+                                    'Pas d\'image'
+                                )}
+                            </td>
                             <td>{p.name}</td>
                             <td>{p.category}</td>
                             <td>{p.current_price}€</td>
