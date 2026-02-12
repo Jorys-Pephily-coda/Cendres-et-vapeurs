@@ -20,8 +20,6 @@ function Home() {
 
   const { user } = useAuth();
 
-  console.log("User dans Home:", user);
-
   const checkAlerts = (data: any): void => {
     if (data.co2_level > 1000) {
       setAlert({

@@ -1,0 +1,39 @@
+.navbar {
+    flex: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.navbar-container {
+    flex: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navbar-brand {
+    color: wheat;
+}
+
+.navbar-nav {
+    list-style: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    justify-content: space-around;
+    align-items: center;
+    flex: 100%;
+}
+
+.admin {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbar-actions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

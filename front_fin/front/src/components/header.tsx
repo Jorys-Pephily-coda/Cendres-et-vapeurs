@@ -1,8 +1,9 @@
 import { Link } from "react-router-dom";
-import '../styles/Header.css';
+import { useAuth } from "../context/AuthContext";
+import "../styles/header.css";
 
 export default function Header() {
-  const user = null;
+  const { user } = useAuth();
 
   return (
     <nav className="navbar">
@@ -19,9 +20,6 @@ export default function Header() {
             <Link to="/commerce">Boutique</Link>
           </li>
           <li>
-            <Link to="/panier">Panier</Link>
-          </li>
-          <li>
             <Link to="/planning">Planning</Link>
           </li>
           <li>
@@ -34,46 +32,50 @@ export default function Header() {
             <Link to="/contact">Contact</Link>
           </li>
 
-          {/*{isEditor() && (
+          {user ? (
+            <li>
+              <Link to="/cart" className="nav-icon" title="Panier">
+                Panier
+              </Link>
+            </li>
+          ) : (
+            <li></li>
+          )}
+
+          {user?.role !== "ADMIN" && (
             <li>
               <Link to="/chat">Chat</Link>
             </li>
           )}
-          {isAdmin() && (
-            <li>
+          {user?.role !== "EDITOR" && (
+            <li className="admin">
               <Link to="/admin">Admin</Link>
+              <span className={`badge badge-${user.role}`}>
+                {"(" + user.role + ")"}
+              </span>
             </li>
-          )}*/}
+          )}
         </ul>
 
         <div className="navbar-actions">
           {user ? (
-            <>
-              <Link to="/cart" className="nav-icon" title="Panier">
-                Panier
-              </Link>
-              <Link to="/profile" className="navbar-user">
-                <span className="user-name">{/*user.username*/}</span>
-                <span className={`badge badge-${/*user.role*/ "1"}`}>
-                  {/*user.role*/}
-                </span>
-              </Link>
+            <div className="sign">
               <button
                 onClick={/*logout*/ () => console.log("logout")}
                 className="btn btn-secondary btn-sm"
               >
                 Déconnexion
               </button>
-            </>
+            </div>
           ) : (
-            <>
+            <div className="sign">
               <Link to="/login" className="btn btn-secondary btn-sm">
                 Connexion
               </Link>
               <Link to="/register" className="btn btn-primary btn-sm">
                 Inscription
               </Link>
-            </>
+            </div>
           )}
         </div>
       </div>
