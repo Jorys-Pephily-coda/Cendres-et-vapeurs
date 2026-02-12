@@ -18,6 +18,9 @@ export default function Header() {
             <Link to="/commerce">Boutique</Link>
           </li>
           <li>
+            <Link to="/panier">Panier</Link>
+          </li>
+          <li>
             <Link to="/planning">Planning</Link>
           </li>
           <li>

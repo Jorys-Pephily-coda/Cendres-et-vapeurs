@@ -1,27 +1,17 @@
 import { useEffect, useState } from 'react';
+import { fetchData } from '../service/Toxicite';
 
 function Toxicite() {
     const [data, setData] = useState<any>(null);
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://localhost:8000/api/monitoring/toxicity/current/', {
-                    method: 'GET',
-                    credentials: 'include',
-                });
-                if (response.ok) {
-                    const result = await response.json();
-                    setData(result);
-                }
-            } catch (error) {
-                console.error('Erreur:', error);
-            }
-        };
 
-        fetchData();
+        fetchData().then(result => setData(result));
 
-        const interval = setInterval(fetchData, 5000);
+
+        const interval = setInterval(() => {
+            fetchData().then(result => setData(result));
+        }, 5000);
 
         return () => clearInterval(interval);
     }, []);
