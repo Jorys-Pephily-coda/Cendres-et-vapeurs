@@ -20,11 +20,13 @@ import Users from './pages/dashboard/Users'
 import Products from './pages/dashboard/Products'
 import DiscountCodes from './pages/dashboard/DiscountCodes'
 import Orders from './pages/dashboard/Orders'
+import Layout from './components/Layout'
 
 
 const router = createBrowserRouter([
   { 
     path: '/',
+    element: <Layout />,
     children: [
       { path: '/login', element: <Login /> },
       { path: '/register', element: <Register /> },
