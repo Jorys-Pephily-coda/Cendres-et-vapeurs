@@ -3,11 +3,21 @@ import { fetchCommerce, addToCart, voteProduct } from "../service/Commerce"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
+import loadingSound from '../assets/sounds/peak.mp3'
 import '../styles/Commerce.css'
 
 function Commerce() {
     const [commerceData, setCommerceData] = useState<any>([])
     const [loading, setLoading] = useState(true)
+
+    const playLoadingSound = () => {
+        const audio = new Audio(loadingSound)
+        audio.volume = 1.0
+        console.log('Tentative de lecture du son...')
+        audio.play()
+            .then(() => console.log('Son joué avec succès'))
+            .catch(error => console.log('Audio play failed:', error))
+    }
 
     const handleVote = async (productId: number) => {
         const result = await voteProduct(productId)
@@ -18,18 +28,22 @@ function Commerce() {
 
     const refreshData = async () => {
         setLoading(true)
+        playLoadingSound()
         const data = await fetchCommerce()
         if (data) {
             setCommerceData(data)
+await new Promise(resolve => setTimeout(resolve, 14000))
             setLoading(false)
         }
     }
 
     useEffect(() => {
         const getCommerceData = async () => {
+            playLoadingSound()
             const data = await fetchCommerce()
             if (data) {
                 setCommerceData(data)
+                await new Promise(resolve => setTimeout(resolve, 14000))
                 setLoading(false)
             }
             else{
@@ -41,7 +55,10 @@ function Commerce() {
     }, [])
 
     if (loading) {
-        return <div>Loading...</div>
+
+        return <div className="loading">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj8Pqb3cB2ZoMdBhbYPlXoIjm9iYy6xmPATQ&s" alt="Loading" className="loading-image" />
+        </div>
     }
     
 
