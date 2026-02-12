@@ -4,15 +4,34 @@ import { useTransition } from "../assets/transition/transition";
 import "../styles/header.css";
 
 export default function Header() {
-  const { user } = useAuth();
+  const { user, setUser } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const { TransitionOverlay, triggerTransition } = useTransition();
 
-  const handleNav = (path: string) => (e: React.MouseEvent) => {
+  const handleNav = (path: string, useTransitionEffect: boolean = true) => (e: React.MouseEvent) => {
     e.preventDefault();
     if (path === location.pathname) return;
-    triggerTransition(() => navigate(path));
+    if (useTransitionEffect) {
+      triggerTransition(() => navigate(path));
+    } else {
+      navigate(path);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await fetch('http://localhost:8000/api/auth/logout/', {
+        method: 'POST',
+        credentials: 'include',
+      });
+    } catch (error) {
+      console.error('Erreur lors de la déconnexion:', error);
+    } finally {
+      sessionStorage.clear();
+      setUser(null);
+      triggerTransition(() => navigate('/login'));
+    }
   };
 
   return (
@@ -78,7 +97,7 @@ export default function Header() {
           {user ? (
             <div className="sign">
               <button
-                onClick={/*logout*/ () => console.log("logout")}
+                onClick={handleLogout}
                 className="btn btn-secondary btn-sm"
               >
                 Déconnexion
@@ -86,10 +105,10 @@ export default function Header() {
             </div>
           ) : (
             <div className="sign">
-              <Link to="/login" onClick={handleNav("/login")} className="btn btn-secondary btn-sm">
+              <Link to="/login" onClick={handleNav("/login", false)} className="btn btn-secondary btn-sm">
                 Connexion
               </Link>
-              <Link to="/register" onClick={handleNav("/register")} className="btn btn-primary btn-sm">
+              <Link to="/register" onClick={handleNav("/register", false)} className="btn btn-primary btn-sm">
                 Inscription
               </Link>
             </div>

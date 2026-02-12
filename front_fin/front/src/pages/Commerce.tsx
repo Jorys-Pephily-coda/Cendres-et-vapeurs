@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useAuth } from "../context/AuthContext"
 import { fetchCommerce, addToCart, voteProduct } from "../service/Commerce"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
@@ -7,6 +8,7 @@ import loadingSound from '../assets/sounds/peak.mp3'
 import '../styles/Commerce.css'
 
 function Commerce() {
+    const { user } = useAuth()
     const [commerceData, setCommerceData] = useState<any>([])
     const [loading, setLoading] = useState(true)
 
@@ -100,28 +102,33 @@ function Commerce() {
                                     <div className="product-name">
                                         <h3>{product.name}</h3>
                                     </div>
-                                    <button 
-                                    className="like-btn" 
-                                    onClick={() => handleVote(product.id)}
-                                    >
-                                    <FontAwesomeIcon 
-                                        icon={product.has_voted ? faHeartSolid : faHeartRegular} 
-                                        className={product.has_voted ? 'heart-filled' : 'heart-empty'}
-                                    />
-                                </button>
+                                    {user && (
+                                        <button 
+                                            className="like-btn" 
+                                            onClick={() => handleVote(product.id)}
+                                        >
+                                            <FontAwesomeIcon 
+                                                icon={product.has_voted ? faHeartSolid : faHeartRegular} 
+                                                className={product.has_voted ? 'heart-filled' : 'heart-empty'}
+                                            />
+                                        </button>
+                                    )}
                                 </div>
                                 <img src={product.image} alt="on est pauvre on a pas mis l'image" className="product-image" />
                                 <p>{product.description}</p>
                                 <p>Price: ${product.current_price}</p>
                                 <p>Stock: {product.stock}</p>
-                                <input 
+                                
+                                {user && (<input 
                                     type="number" 
                                     min="1" 
                                     max={product.stock} 
                                     defaultValue="1" 
                                     className="quantity-input"
-                                />
-                                <button className="panier" onClick={() => addToCart(product.id, 1)}>Ajouter au panier</button>
+                                />)}
+                                {user && (
+                                    <button className="panier" onClick={() => addToCart(product.id, 1)}>Ajouter au panier</button>
+                                )}
                             </div>
                         ))
                     ) : (
