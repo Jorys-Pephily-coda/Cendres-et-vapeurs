@@ -17,7 +17,7 @@ class Command(BaseCommand):
         self.stdout.write('Creating users...')
         admin = User.objects.create_superuser(
             username='admin',
-            email='nawfel.dahri14@gmail.com',
+            email='jorysgyatt@gmail.com',
             password='admin123',
             role=User.Role.ADMIN
         )

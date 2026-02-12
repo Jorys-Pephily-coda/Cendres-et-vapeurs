@@ -12,14 +12,16 @@ function Commerce() {
     const handleVote = async (productId: number) => {
         const result = await voteProduct(productId)
         if (result) {
-            setCommerceData((prevData: any) => ({
-                ...prevData,
-                results: prevData.results.map((product: any) => 
-                    product.id === productId 
-                        ? { ...product, has_voted: !product.has_voted }
-                        : product
-                )
-            }))
+            await refreshData()
+        }
+    }
+
+    const refreshData = async () => {
+        setLoading(true)
+        const data = await fetchCommerce()
+        if (data) {
+            setCommerceData(data)
+            setLoading(false)
         }
     }
 
@@ -74,7 +76,7 @@ function Commerce() {
                                     />
                                 </button>
                                 </div>
-                                <img src={product.image_url} alt="on est pauvre on a pas mis l'image" className="product-image" />
+                                <img src={product.image} alt="on est pauvre on a pas mis l'image" className="product-image" />
                                 <p>{product.description}</p>
                                 <p>Price: ${product.current_price}</p>
                                 <p>Stock: {product.stock}</p>
