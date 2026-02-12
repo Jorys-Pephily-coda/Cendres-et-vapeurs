@@ -39,24 +39,57 @@
     margin-top: 20px;
 }
 
-.loading-image{ 
-    width: 1000px; 
-    height: 1000px; 
-    animation: bounce 1s ease-in-out infinite;
+.loading {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: discoBackground 2s ease-in-out infinite;
 }
 
-@keyframes bounce {
-    0%, 100% {
+@keyframes discoBackground {
+    0% { background: linear-gradient(45deg, #ff00ff, #00ffff); }
+    20% { background: linear-gradient(45deg, #ffff00, #ff00ff); }
+    40% { background: linear-gradient(45deg, #00ff00, #ffff00); }
+    60% { background: linear-gradient(45deg, #ff00ff, #00ff00); }
+    80% { background: linear-gradient(45deg, #00ffff, #ff00ff); }
+    100% { background: linear-gradient(45deg, #ff00ff, #00ffff); }
+}
+
+.loading-image{ 
+    width: 100%; 
+    height: 100%; 
+    animation: discoFunk 1.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 30px #ff00ff) drop-shadow(0 0 60px #00ffff);
+}
+
+@keyframes discoFunk {
+    0% {
         transform: translateY(0) scale(1) translateX(0);
+        filter: drop-shadow(0 0 30px #ff00ff) drop-shadow(0 0 60px #00ffff);
     }
     25% {
-        transform: translateY(-30px) scale(1.05) translateX(-50px);
+        transform: translateY(-30px) scale(1.05) translateX(-50px) rotate(359deg);
+        filter: drop-shadow(0 0 30px #ffff00) drop-shadow(0 0 60px #ff00ff);
+    }
+    30%{
+        transform: rotate(0deg) scale(1.30) translateX(0) translateY(0);
     }
     50% {
         transform: translateY(0) scale(1) translateX(0);
+        filter: drop-shadow(0 0 30px #00ff00) drop-shadow(0 0 60px #ffff00);
     }
     75% {
-        transform: translateY(-15px) scale(1.02) translateX(50px);
+        transform: translateY(-15px) scale(1.02) translateX(50px) rotate(-359deg);
+        filter: drop-shadow(0 0 30px #00ffff) drop-shadow(0 0 60px #ff00ff);
+    }
+    80%{
+        transform: rotate(0deg) scale(1.30) translateX(0) translateY(0); 
+    }
+    100% {
+        transform: translateY(0) scale(1) translateX(0);
+        filter: drop-shadow(0 0 30px #ff00ff) drop-shadow(0 0 60px #00ffff);
     }
 }
 

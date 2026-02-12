@@ -12,7 +12,7 @@ function Commerce() {
 
     const playLoadingSound = () => {
         const audio = new Audio(loadingSound)
-        audio.volume = 1.0
+        audio.volume = 10.0
         console.log('Tentative de lecture du son...')
         audio.play()
             .then(() => console.log('Son joué avec succès'))
@@ -80,6 +80,7 @@ await new Promise(resolve => setTimeout(resolve, 14000))
                             <div className="product-card" key={product.id}>
                                 <div className="card-top">
                                     <div className="blank-card"> </div>
+
                                     <div className="product-name">
                                         <h3>{product.name}</h3>
                                     </div>
