@@ -21,7 +21,7 @@ import Products from './pages/dashboard/Products'
 import DiscountCodes from './pages/dashboard/DiscountCodes'
 import Orders from './pages/dashboard/Orders'
 import Layout from './components/Layout'
-import TransitionDemo from './assets/transition/TransitionDemo'
+import { transition } from './assets/transition/transition'
 
 
 const router = createBrowserRouter([
@@ -47,7 +47,6 @@ const router = createBrowserRouter([
       { path: '/commande', element: <AuthMiddleware><Commande /></AuthMiddleware> },
       { path: '/planning', element: <AuthMiddleware><Planning /></AuthMiddleware> },
       { path: '/toxicite', element: <AuthMiddleware><Toxicite /></AuthMiddleware> },
-      { path: '/transition-demo', element: <TransitionDemo /> },
     ]
   },
 ])

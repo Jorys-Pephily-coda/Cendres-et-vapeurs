@@ -18,7 +18,7 @@ import './transition.css';
 
 const GEAR_COUNT = 5;
 
-export function useSteampunkTransition() {
+export const transition = () => {
     const isTransitioning = useRef(false);
 
     const triggerTransition = useCallback((onMidpoint?: () => void): Promise<void> => {
