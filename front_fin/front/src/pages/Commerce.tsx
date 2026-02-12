@@ -10,6 +10,18 @@ function Commerce() {
     const [commerceData, setCommerceData] = useState<any>([])
     const [loading, setLoading] = useState(true)
 
+    const enterFullscreen = () => {
+        const elem = document.documentElement
+        if (elem.requestFullscreen) {
+            elem.requestFullscreen().catch(err => console.log('Fullscreen failed:', err))
+        }
+    }
+    const exitFullscreen = () => {
+        if (document.exitFullscreen) {
+            document.exitFullscreen().catch(err => console.log('Exit fullscreen failed:', err))
+        }
+    }
+
     const playLoadingSound = () => {
         const audio = new Audio(loadingSound)
         audio.volume = 1.0
@@ -28,17 +40,20 @@ function Commerce() {
 
     const refreshData = async () => {
         setLoading(true)
+        enterFullscreen()
         playLoadingSound()
         const data = await fetchCommerce()
         if (data) {
             setCommerceData(data)
-await new Promise(resolve => setTimeout(resolve, 14000))
+            await new Promise(resolve => setTimeout(resolve, 14000))
             setLoading(false)
+            exitFullscreen()
         }
     }
 
     useEffect(() => {
         const getCommerceData = async () => {
+            enterFullscreen()
             playLoadingSound()
             const data = await fetchCommerce()
             if (data) {
@@ -49,6 +64,7 @@ await new Promise(resolve => setTimeout(resolve, 14000))
             else{
                 console.error('No commerce data received')
             }
+            exitFullscreen()
         }
         getCommerceData()
         console.log('Commerce data:', commerceData)
