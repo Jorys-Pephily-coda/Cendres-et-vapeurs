@@ -4,7 +4,6 @@ import "../styles/header.css";
 
 export default function Header() {
   const { user } = useAuth();
-
   return (
     <nav className="navbar">
       <div className="container navbar-container">
@@ -35,26 +34,31 @@ export default function Header() {
           {user ? (
             <li>
               <Link to="/cart" className="nav-icon" title="Panier">
-                Panier
+          Panier
               </Link>
             </li>
           ) : (
             <li></li>
           )}
 
-          {user?.role !== "ADMIN" && (
+          {(user?.role === "ADMIN" || user?.role === "EDITOR") && (
             <li>
               <Link to="/chat">Chat</Link>
             </li>
           )}
-          {user?.role !== "EDITOR" && (
+          {(user?.role === "ADMIN" || user?.role === "EDITOR") && (
             <li className="admin">
-              <Link to="/admin">Admin</Link>
-              <span className={`badge badge-${user.role}`}>
-                {"(" + user.role + ")"}
+              <Link to="/dashboard">dashboard</Link>
+              <span className={`badge badge-${user?.role}`}>
               </span>
             </li>
           )}
+
+            {user && (
+            <li className="user-info">
+              <span>Bonjour, {user.username}</span>
+            </li>
+            )}
         </ul>
 
         <div className="navbar-actions">
