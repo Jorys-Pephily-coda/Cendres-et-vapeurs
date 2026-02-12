@@ -18,7 +18,7 @@ import './transition.css';
 
 const GEAR_COUNT = 5;
 
-export const transition = () => {
+export const useTransition = () => {
     const isTransitioning = useRef(false);
 
     const triggerTransition = useCallback((onMidpoint?: () => void): Promise<void> => {

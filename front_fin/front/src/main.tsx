@@ -21,7 +21,6 @@ import Products from './pages/dashboard/Products'
 import DiscountCodes from './pages/dashboard/DiscountCodes'
 import Orders from './pages/dashboard/Orders'
 import Layout from './components/Layout'
-import { transition } from './assets/transition/transition'
 
 
 const router = createBrowserRouter([
