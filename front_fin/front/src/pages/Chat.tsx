@@ -41,14 +41,6 @@ function Chat() {
         };
     }, [messages]);
 
-    useEffect(() => {
-        scrollToBottom();
-    }, [messages]);
-
-    const scrollToBottom = () => {
-        messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-    };
-
     const fetchMessages = async () => {
         try {
             const response = await fetch('http://localhost:8000/api/chat/messages/?limit=50', {
