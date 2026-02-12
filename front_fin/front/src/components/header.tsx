@@ -65,7 +65,7 @@ export default function Header() {
 
           {user ? (
             <li>
-              <Link to="/cart" onClick={handleNav("/cart")} className="nav-icon" title="Panier">
+              <Link to="/panier" onClick={handleNav("/panier")} className="nav-icon" title="Panier">
           Panier
               </Link>
             </li>
