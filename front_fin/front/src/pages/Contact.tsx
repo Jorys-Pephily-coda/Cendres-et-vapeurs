@@ -1,5 +1,6 @@
 import { useState } from "react";
 import "../styles/Contact.css";
+import { sendContactMessage } from "../service/Contact";
 
 type FormData = {
   nom: string;
@@ -51,9 +52,22 @@ function Contact() {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (validate()) setSubmitted(true);
+    if (!validate()) return;
+
+    try {
+      await sendContactMessage({
+        name: `${form.prenom} ${form.nom}`,
+        email: form.email,
+        subject: form.objet,
+        message: form.message,
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error('Erreur:', error);
+      alert(error instanceof Error ? error.message : 'Erreur de connexion au serveur');
+    }
   };
 
   const handleReset = () => {
