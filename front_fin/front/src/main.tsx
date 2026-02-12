@@ -13,6 +13,7 @@ import Panier from './pages/Panier'
 import Planning from './pages/Planning'
 import Toxicite from './pages/Toxicite'
 import Home from './pages/Home'
+import Bourse from './pages/Bourse'
 import Commande from './pages/Commande'
 import { AuthProvider } from './context/AuthContext'
 import AuthMiddleware from './middleware/Authmiddleware'
@@ -46,6 +47,7 @@ const router = createBrowserRouter([
       { path: '/commande', element: <AuthMiddleware><Commande /></AuthMiddleware> },
       { path: '/planning', element: <AuthMiddleware><Planning /></AuthMiddleware> },
       { path: '/toxicite', element: <AuthMiddleware><Toxicite /></AuthMiddleware> },
+      { path: '/bourse', element: <AuthMiddleware><Bourse /></AuthMiddleware> },
     ]
   },
 ])

@@ -48,6 +48,15 @@
     animation: discoBackground 2s ease-in-out infinite;
 }
 
+.search{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    margin-right: 100px;
+}
+
 @keyframes discoBackground {
     0% { background: linear-gradient(45deg, #ff00ff, #00ffff); }
     20% { background: linear-gradient(45deg, #ffff00, #ff00ff); }
@@ -126,6 +135,24 @@
     flex-shrink: 0;
     padding: 0px;
     align-self: center;
+}
+
+.redirect-btn{
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    margin-right: 20px;
+    flex-shrink: 0;
+    padding: 0px;
+    align-self: center;
+}
+
+.bourse-btn{
+    display: flex;
+    justify-content: center;
+    margin: 0
 }
 
 .blank-card{

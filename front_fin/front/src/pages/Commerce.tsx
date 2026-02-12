@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "../context/AuthContext"
-import { fetchCommerce, addToCart, voteProduct } from "../service/Commerce"
+import { fetchCommerce, addToCart, voteProduct, searchProducts } from "../service/Commerce"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import loadingSound from '../assets/sounds/peak.mp3'
 import '../styles/Commerce.css'
+import { Link } from "react-router-dom"
 
 function Commerce() {
     const { user } = useAuth()
     const [commerceData, setCommerceData] = useState<any>([])
     const [loading, setLoading] = useState(true)
-
+    const [searchQuery, setSearchQuery] = useState("")
     const enterFullscreen = () => {
         const elem = document.documentElement
         if (elem.requestFullscreen) {
@@ -21,6 +22,20 @@ function Commerce() {
     const exitFullscreen = () => {
         if (document.exitFullscreen) {
             document.exitFullscreen().catch(err => console.log('Exit fullscreen failed:', err))
+        }
+    }
+
+    const handleSearch = async () => {
+        if (searchQuery.trim() === "") {
+            const data = await fetchCommerce()
+            if (data) {
+                setCommerceData(data)
+            }
+            return
+        }
+        const data = await searchProducts(searchQuery)
+        if (data) {
+            setCommerceData(data)
         }
     }
 
@@ -47,7 +62,6 @@ function Commerce() {
         const data = await fetchCommerce()
         if (data) {
             setCommerceData(data)
-            await new Promise(resolve => setTimeout(resolve, 14000))
             setLoading(false)
             exitFullscreen()
         }
@@ -60,7 +74,6 @@ function Commerce() {
             const data = await fetchCommerce()
             if (data) {
                 setCommerceData(data)
-                await new Promise(resolve => setTimeout(resolve, 14000))
                 setLoading(false)
             }
             else{
@@ -90,7 +103,11 @@ function Commerce() {
                     <h1>Bienvenue dans la forge des nains</h1>
                     <p>Fait toi plaisir petit humain mais eh faut que ton porte monnaie tienne gamin</p>
                 </div>
-                <button className="bourse-btn">Cours de la bourse</button>
+                <button className="redirect-btn"><Link to="/bourse" className="bourse-btn">Cours de la bourse</Link></button>
+            </div>
+            <div className="search">
+                <input type="text" placeholder="Rechercher un produit..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
+                <button className="search-btn" onClick={handleSearch}>Rechercher</button>
             </div>
             <div className="shop">
                 {commerceData.count > 0 ? (

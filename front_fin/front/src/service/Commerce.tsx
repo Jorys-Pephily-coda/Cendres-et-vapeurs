@@ -64,4 +64,25 @@ const voteProduct = async (productId: number) => {
     }
 }
 
-export { fetchCommerce, addToCart, voteProduct }
+const searchProducts = async (query: string) => {
+    try{
+        const response = await fetch(`http://localhost:8000/api/products/?search=${query}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            credentials: 'include',
+        })
+        if (response.ok) {
+            const data = await response.json()
+            console.log('Search results fetched successfully:', data)
+            return data
+        } else {
+            console.error('Failed to fetch search results:', response.statusText)
+        }
+    } catch (error) {
+        console.error('Error during fetching search results:', error)
+    }
+} 
+
+export { fetchCommerce, addToCart, voteProduct, searchProducts }
