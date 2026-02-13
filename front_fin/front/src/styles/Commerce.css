@@ -16,18 +16,23 @@
     width: 200.81px;
 }
 
-.bourse-btn{
-    width: fit-content;
-    padding: 10px 20px;
+.bourse-product-btn{
     flex-shrink: 0;
-    margin-right: 20px;
     align-self: center;
+    background: none;
+    width: fit-content;
+    height: fit-content;
+}
+
+.bourse-product-link{
+    display: flex;
+    margin: 0;
 }
 
 .top{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     width: 100%;
 }
 

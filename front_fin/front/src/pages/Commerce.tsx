@@ -96,9 +96,6 @@ function Commerce() {
     return (
         <div className="commerce">
             <div className="top">
-                <div className="blank">
-                    <h1></h1>
-                </div>
                 <div className="text">
                     <h1>Bienvenue dans la forge des nains</h1>
                     <p>Fait toi plaisir petit humain mais eh faut que ton porte monnaie tienne gamin</p>
@@ -113,11 +110,11 @@ function Commerce() {
                         commerceData.results.map((product: any) => (
                             <div className="product-card" key={product.id}>
                                 <div className="card-top">
-                                    <button className="bourse-product-btn">
+                                    <div className="bourse-product-btn">
                                         <Link to={`/bourse/${product.id}`} className="bourse-product-link">
                                             <FontAwesomeIcon icon={faCoins} className="coin-icon" />
                                         </Link>
-                                    </button>
+                                    </div>
                                     <div className="product-name">
                                         <h3>{product.name}</h3>
                                     </div>
