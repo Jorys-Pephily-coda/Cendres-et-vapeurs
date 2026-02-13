@@ -228,17 +228,19 @@ function Planning() {
                     ))}
                     {calendarDays}
                 </div>
+            </div>
 
-                {selectedDate && (
-                    <div className="selected-info">
-                        <h3>
+            {selectedDate && (
+                <div className="modal-overlay" onClick={() => setSelectedDate(null)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>
                             {selectedDate.toLocaleDateString('fr-FR', {
                                 weekday: 'long',
                                 year: 'numeric',
                                 month: 'long',
                                 day: 'numeric'
                             })}
-                        </h3>
+                        </h2>
                         
                         {selectedDayEvents.length > 0 ? (
                             <div className="events-list">
@@ -246,22 +248,24 @@ function Planning() {
                                     <div key={event.id} className={`event-item priority-${event.priority}`}>
                                         <div className="event-header">
                                             <h4>{event.title}</h4>
-                                            {isEditorOrAdmin && (
-                                                <div className="event-actions">
-                                                    <button onClick={() => openEventModal(event)} className="btn-edit">✏️</button>
-                                                    <button onClick={() => handleDeleteEvent(event.id)} className="btn-delete">🗑️</button>
-                                                </div>
-                                            )}
+                                            <div className="event-header-right">
+                                                <span className={`priority-badge priority-${event.priority}`}>
+                                                    {event.priority === 'low' ? 'Basse' : 
+                                                     event.priority === 'medium' ? 'Moyenne' : 
+                                                     event.priority === 'high' ? 'Haute' : 'Critique'}
+                                                </span>
+                                                {isEditorOrAdmin && (
+                                                    <div className="event-actions">
+                                                        <button onClick={() => openEventModal(event)} className="btn-edit">✏️</button>
+                                                        <button onClick={() => handleDeleteEvent(event.id)} className="btn-delete">🗑️</button>
+                                                    </div>
+                                                )}
+                                            </div>
                                         </div>
                                         {event.description && <p>{event.description}</p>}
                                         <div className="event-details">
                                             <span>⏰ {new Date(event.start_date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
                                             {event.location && <span>📍 {event.location}</span>}
-                                            <span className={`priority-badge priority-${event.priority}`}>
-                                                {event.priority === 'low' ? 'Basse' : 
-                                                 event.priority === 'medium' ? 'Moyenne' : 
-                                                 event.priority === 'high' ? 'Haute' : 'Critique'}
-                                            </span>
                                         </div>
                                     </div>
                                 ))}
@@ -269,9 +273,13 @@ function Planning() {
                         ) : (
                             <p className="no-events">Aucun événement pour cette date</p>
                         )}
+
+                        <div className="modal-actions">
+                            <button onClick={() => setSelectedDate(null)} className="btn-cancel">Fermer</button>
+                        </div>
                     </div>
-                )}
-            </div>
+                </div>
+            )}
 
             {showEventModal && (
                 <div className="modal-overlay" onClick={closeEventModal}>

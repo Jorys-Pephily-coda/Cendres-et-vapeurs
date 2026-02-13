@@ -37,6 +37,7 @@ function Home() {
   const [error, setError] = useState<string | null>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [logs, setLogs] = useState<LogEntry[]>([]);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const intervalRef = useRef<number | null>(null);
   const currentDate = new Date();
 
@@ -176,6 +177,14 @@ function Home() {
     );
   };
 
+  const handleDateClick = (day: number) => {
+    setSelectedDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), day));
+  };
+
+  const closeModal = () => {
+    setSelectedDate(null);
+  };
+
   const daysInMonth = getDaysInMonth(currentDate);
   const firstDay = getFirstDayOfMonth(currentDate);
   const calendarDays = [];
@@ -194,6 +203,8 @@ function Home() {
         className={`calendar-day ${isToday(day) ? "today" : ""} ${
           dayEvents.length > 0 ? "has-events" : ""
         }`}
+        onClick={() => handleDateClick(day)}
+        style={{ cursor: dayEvents.length > 0 ? "pointer" : "default" }}
       >
         <span className="day-number">{day}</span>
         {dayEvents.length > 0 && (
@@ -213,6 +224,8 @@ function Home() {
       </div>
     );
   }
+
+  const selectedDayEvents = selectedDate ? getEventsForDay(selectedDate.getDate()) : [];
 
   if (!currentData) {
     return (
@@ -296,6 +309,58 @@ function Home() {
                 {day}
               </div>
             ))}
+
+      {selectedDate && selectedDayEvents.length > 0 && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <h2>
+              {selectedDate.toLocaleDateString("fr-FR", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </h2>
+            <div className="events-list">
+              {selectedDayEvents.map((event) => (
+                <div
+                  key={event.id}
+                  className={`event-item priority-${event.priority}`}
+                >
+                  <div className="event-header">
+                    <h4>{event.title}</h4>
+                    <span className={`priority-badge priority-${event.priority}`}>
+                      {event.priority === "low"
+                        ? "Basse"
+                        : event.priority === "medium"
+                          ? "Moyenne"
+                          : event.priority === "high"
+                            ? "Haute"
+                            : "Critique"}
+                    </span>
+                  </div>
+                  {event.description && <p>{event.description}</p>}
+                  <div className="event-details">
+                    <span>
+                      ⏰{" "}
+                      {new Date(event.start_date).toLocaleTimeString("fr-FR", {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      })}
+                    </span>
+                    {event.location && <span>📍 {event.location}</span>}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="modal-actions">
+              <button onClick={closeModal} className="btn-cancel">
+                Fermer
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
             {calendarDays}
           </div>
         </div>
