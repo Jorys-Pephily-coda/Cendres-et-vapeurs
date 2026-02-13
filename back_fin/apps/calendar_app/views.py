@@ -22,12 +22,18 @@ class CalendarEventViewSet(viewsets.ModelViewSet):
         if priority:
             queryset = queryset.filter(priority=priority)
         return queryset
+    
+
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsEditorOrAdmin()]
         return super().get_permissions()
+    
+
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+    
     @action(detail=False, methods=['get'])
     def month_view(self, request):
         year = request.query_params.get('year')
@@ -53,6 +59,8 @@ class CalendarEventViewSet(viewsets.ModelViewSet):
             'month': month,
             'events': serializer.data
         })
+    
+
     @action(detail=False, methods=['get'])
     def priorities(self, request):
         return Response({
@@ -63,6 +71,7 @@ class CalendarEventViewSet(viewsets.ModelViewSet):
         })
 class ShiftNoteViewSet(viewsets.ModelViewSet):
     serializer_class = ShiftNoteSerializer
+
     def get_queryset(self):
         user = self.request.user
         queryset = ShiftNote.objects.all()
@@ -78,8 +87,11 @@ class ShiftNoteViewSet(viewsets.ModelViewSet):
         if user_id and user.is_admin:
             queryset = queryset.filter(user_id=user_id)
         return queryset
+    
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
+
+
     def perform_update(self, serializer):
         note = self.get_object()
         if note.user != self.request.user and not self.request.user.is_admin:
@@ -87,12 +99,16 @@ class ShiftNoteViewSet(viewsets.ModelViewSet):
                 'error': 'Vous ne pouvez modifier que vos propres notes'
             }, status=status.HTTP_403_FORBIDDEN)
         serializer.save()
+
+
     def perform_destroy(self, instance):
         if instance.user != self.request.user and not self.request.user.is_admin:
             return Response({
                 'error': 'Vous ne pouvez supprimer que vos propres notes'
             }, status=status.HTTP_403_FORBIDDEN)
         instance.delete()
+
+
     @action(detail=False, methods=['get'])
     def my_notes(self, request):
         notes = ShiftNote.objects.filter(user=request.user)
@@ -101,6 +117,8 @@ class ShiftNoteViewSet(viewsets.ModelViewSet):
             notes = notes.filter(date=date)
         serializer = self.get_serializer(notes, many=True)
         return Response(serializer.data)
+    
+    
     @action(detail=False, methods=['get'])
     def date_notes(self, request):
         date_str = request.query_params.get('date')

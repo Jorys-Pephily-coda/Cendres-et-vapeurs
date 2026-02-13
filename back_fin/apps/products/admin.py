@@ -21,11 +21,13 @@ class ProductAdmin(admin.ModelAdmin):
             'fields': ('created_by', 'created_at', 'updated_at')
         }),
     )
+
 @admin.register(ProductVote)
 class ProductVoteAdmin(admin.ModelAdmin):
     list_display = ('product', 'user', 'created_at')
     list_filter = ('created_at',)
     search_fields = ('product__name', 'user__username')
+    
 @admin.register(PriceHistory)
 class PriceHistoryAdmin(admin.ModelAdmin):
     list_display = ('product', 'price', 'action', 'timestamp')

@@ -14,6 +14,7 @@ class ActivityLog(models.Model):
         ('chat_message', 'Message chat'),
         ('other', 'Autre'),
     ]
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.SET_NULL,
@@ -21,6 +22,7 @@ class ActivityLog(models.Model):
         blank=True,
         related_name='activity_logs'
     )
+
     action_type = models.CharField(
         max_length=50,
         choices=ACTION_TYPES,
@@ -36,6 +38,7 @@ class ActivityLog(models.Model):
     def __str__(self):
         user_str = self.user.username if self.user else 'Système'
         return f"{user_str} - {self.get_action_type_display()} - {self.timestamp.strftime('%d/%m/%Y %H:%M')}"
+    
     @staticmethod
     def log_action(user, action_type, description, ip_address=None):
         return ActivityLog.objects.create(

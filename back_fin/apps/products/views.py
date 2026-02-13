@@ -3,19 +3,22 @@ from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from django.db.models import Count
+from django.db.models import Count, F
 from .models import Product, ProductVote, PriceHistory
 from .serializers import (
     ProductSerializer, ProductCreateUpdateSerializer,
     ProductVoteSerializer, PriceHistorySerializer
 )
 from apps.authentication.permissions import IsEditorOrAdmin, IsUserOrAbove
+from .market_simulator import MarketSimulator
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.filter(is_active=True)
     permission_classes = [IsAuthenticatedOrReadOnly]
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'description', 'category']
     ordering_fields = ['created_at', 'current_price', 'name']
+
+
     def get_queryset(self):
         queryset = Product.objects.all()
         if not (self.request.user.is_authenticated and self.request.user.is_editor):
@@ -29,21 +32,37 @@ class ProductViewSet(viewsets.ModelViewSet):
                 vote_count_db=Count('votes')
             ).order_by('-vote_count_db', '-created_at')
         return queryset
+    
+
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
             return ProductCreateUpdateSerializer
         return ProductSerializer
+    
+
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsEditorOrAdmin()]
         return super().get_permissions()
+    
+
     def retrieve(self, request, *args, **kwargs):
-        product = self.get_object()
-        product.fluctuate_price(action='view')
-        serializer = self.get_serializer(product)
+        instance = self.get_object()
+        if not instance.is_active and not (request.user.is_authenticated and request.user.is_editor):
+            return Response({'detail': 'Produit introuvable.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        Product.objects.filter(pk=instance.pk).update(view_count=F('view_count') + 1)
+        instance.refresh_from_db(fields=['view_count'])
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
+    
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+    
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save(update_fields=['is_active'])
+
     @action(detail=True, methods=['post'], permission_classes=[IsUserOrAbove])
     def vote(self, request, pk=None):
         product = self.get_object()
@@ -61,6 +80,8 @@ class ProductViewSet(viewsets.ModelViewSet):
                 'message': 'Vote ajouté',
                 'vote_count': product.vote_count
             }, status=status.HTTP_201_CREATED)
+        
+
     @action(detail=True, methods=['get'])
     def price_history(self, request, pk=None):
 
@@ -68,6 +89,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         history = product.price_history.all()[:50]
         serializer = PriceHistorySerializer(history, many=True)
         return Response(serializer.data)
+    
+
     @action(detail=False, methods=['get'])
     def top_voted(self, request):
 
@@ -76,6 +99,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         ).order_by('-vote_count_db')[:10]
         serializer = self.get_serializer(products, many=True)
         return Response(serializer.data)
+    
+
     @action(detail=False, methods=['get'])
     def categories(self, request):
 
@@ -83,3 +108,30 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response({
             'categories': [cat for cat in categories if cat]
         })
+
+    @action(detail=False, methods=['post'], permission_classes=[IsEditorOrAdmin])
+    def start_simulation(self, request):
+        interval = request.data.get('interval', 5)
+        volatility = request.data.get('volatility', 1.0)
+        influence = request.data.get('influence', 1.0)
+        
+        result = MarketSimulator.start(interval=interval, volatility=volatility, influence=influence)
+        
+        if 'error' in result:
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(result, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['post'], permission_classes=[IsEditorOrAdmin])
+    def stop_simulation(self, request):
+        result = MarketSimulator.stop()
+        
+        if 'error' in result:
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(result, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def simulation_status(self, request):
+        result = MarketSimulator.status()
+        return Response(result, status=status.HTTP_200_OK)

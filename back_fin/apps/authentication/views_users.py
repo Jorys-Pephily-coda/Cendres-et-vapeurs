@@ -13,6 +13,8 @@ class UserListView(generics.ListAPIView):
         if role:
             queryset = queryset.filter(role=role)
         return queryset
+    
+
 class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -24,6 +26,8 @@ class UserDetailView(generics.RetrieveUpdateDestroyAPIView):
                 'error': 'Seuls les administrateurs peuvent modifier les rôles'
             }, status=status.HTTP_403_FORBIDDEN)
         return super().update(request, *args, **kwargs)
+    
+    
     def destroy(self, request, *args, **kwargs):
         user = self.get_object()
         if user == request.user:

@@ -125,7 +125,7 @@ SIMPLE_JWT = {
 }
 CORS_ALLOWED_ORIGINS = config(
     'CORS_ALLOWED_ORIGINS',
-    default='http://localhost:4200,http://localhost:3000'
+    default='http://localhost:4200,http://localhost:3000,http://localhost:5173'
 ).split(',')
 CORS_ALLOW_CREDENTIALS = True
 EMAIL_BACKEND = config('EMAIL_BACKEND', default='django.core.mail.backends.console.EmailBackend')
@@ -151,3 +151,8 @@ CHANNEL_LAYERS = {
 # }
 TOXICITY_THRESHOLD = config('TOXICITY_THRESHOLD', default=75, cast=int)
 TWO_FACTOR_CODE_EXPIRY = 10
+
+# Stripe
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default=config('STRIPE_SECRET_WEBHOOK', default=''))
+FRONT_URL = config('FRONT_URL', default='http://localhost:5173')

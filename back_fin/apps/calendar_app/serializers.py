@@ -12,6 +12,8 @@ class CalendarEventSerializer(serializers.ModelSerializer):
         read_only_fields = ['id', 'created_by', 'created_by_name', 'created_at', 'updated_at']
     def get_created_by_name(self, obj):
         return obj.created_by.username if obj.created_by else None
+    
+    
 class ShiftNoteSerializer(serializers.ModelSerializer):
     user_name = serializers.SerializerMethodField()
     shift_display = serializers.CharField(source='get_shift_display', read_only=True)

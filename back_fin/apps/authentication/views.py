@@ -210,7 +210,7 @@ def change_password_view(request):
 
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def logout_view(request):
     response = Response({
         'message': 'Déconnexion réussie'

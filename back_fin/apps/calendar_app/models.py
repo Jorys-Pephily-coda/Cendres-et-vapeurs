@@ -34,6 +34,8 @@ class CalendarEvent(models.Model):
         ordering = ['start_date']
     def __str__(self):
         return f"{self.title} - {self.start_date.strftime('%d/%m/%Y')}"
+    
+    
 class ShiftNote(models.Model):
     SHIFT_CHOICES = [
         ('morning', 'Quart du matin'),

@@ -346,12 +346,7 @@ python manage.py makemigrations
 python manage.py migrate --run-syncdb
 ```
 
-### Problème WebSocket
 
-Vérifier que Redis est lancé :
-```bash
-redis-server
-```
 
 ### Problème CORS
 
