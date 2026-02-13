@@ -9,12 +9,39 @@ function AuthMiddleware({ children }: { children: React.ReactNode }) {
   const navigate = useNavigate();
   const { setUser } = useAuth();
 
+  const refreshAccessToken = async (): Promise<boolean> => {
+    try {
+      const response = await fetch('http://localhost:8000/api/auth/refresh/', {
+        method: 'POST',
+        credentials: 'include',
+      });
+      
+      if (response.ok) {
+        return true;
+      }
+      return false;
+    } catch (error) {
+      console.error('Erreur refresh token:', error);
+      return false;
+    }
+  };
+
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch('http://localhost:8000/api/auth/me/', {
+        let response = await fetch('http://localhost:8000/api/auth/me/', {
           credentials: 'include',
         });
+        
+        if (response.status === 401) {
+          const refreshed = await refreshAccessToken();
+          
+          if (refreshed) {
+            response = await fetch('http://localhost:8000/api/auth/me/', {
+              credentials: 'include',
+            });
+          }
+        }
         
         if (response.status === 200) {
           const data = await response.json();
@@ -50,3 +77,4 @@ function AuthMiddleware({ children }: { children: React.ReactNode }) {
 }
 
 export default AuthMiddleware;
+
