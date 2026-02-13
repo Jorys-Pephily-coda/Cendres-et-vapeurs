@@ -112,7 +112,7 @@ function Commerce() {
                                 <p>Stock: {product.stock}</p>
                                 <p>Vote : {product.vote_count}</p>
                                 
-                                {user && product.is_active && (<input 
+                                {user && product.is_active && product.stock > 0 && (<input 
                                     type="number" 
                                     min="1" 
                                     max={product.stock} 
@@ -120,10 +120,12 @@ function Commerce() {
                                     className="quantity-input"
                                 />)}
                                 {user && (
-                                    product.is_active ? (
-                                        <button className="panier" onClick={() => addToCart(product.id, 1)}>Ajouter au panier</button>
-                                    ) : (
+                                    !product.is_active ? (
                                         <div className="product-disabled">Produit désactivé</div>
+                                    ) : product.stock === 0 ? (
+                                        <button className="panier" disabled>Rupture de stock</button>
+                                    ) : (
+                                        <button className="panier" onClick={() => addToCart(product.id, 1)}>Ajouter au panier</button>
                                     )
                                 )}
                             </div>
