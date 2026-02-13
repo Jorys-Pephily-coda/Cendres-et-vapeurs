@@ -43,7 +43,7 @@ function Chat() {
 
     const fetchMessages = async () => {
         try {
-            const response = await fetch('http://localhost:8000/api/chat/messages/?limit=50', {
+            const response = await fetch('http://localhost:8000/api/chat/messages/?limit=10', {
                 credentials: 'include',
             });
             if (response.ok) {
