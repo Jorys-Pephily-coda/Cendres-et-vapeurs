@@ -31,17 +31,21 @@ function Orders() {
 
     const handleStatusChange = async (orderId: number, newStatus: string) => {
         try {
-            const response = await fetch(`http://localhost:8000/api/orders/${orderId}/`, {
-                method: 'PATCH',
+            const response = await fetch(`http://localhost:8000/api/orders/${orderId}/update_status/`, {
+                method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'include',
                 body: JSON.stringify({ status: newStatus }),
             });
             if (response.ok) {
                 fetchOrders();
+            } else {
+                const data = await response.json().catch(() => ({}));
+                alert(data.error || 'Erreur lors de la mise à jour du statut');
             }
         } catch (error) {
             console.error('Erreur:', error);
+            alert('Erreur lors de la mise à jour du statut');
         }
     };
 
@@ -52,18 +56,15 @@ function Orders() {
                 <thead>
                     <tr>
                         <th>N° Commande</th>
-                        <th>Utilisateur</th>
                         <th>Total</th>
                         <th>Statut</th>
                         <th>Date</th>
-                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {orders.map((order) => (
                         <tr key={order.id}>
                             <td>{order.order_number}</td>
-                            <td>{order.user?.username}</td>
                             <td>{order.total}€</td>
                             <td>
                                 <select
@@ -78,11 +79,6 @@ function Orders() {
                                 </select>
                             </td>
                             <td>{new Date(order.created_at).toLocaleDateString()}</td>
-                            <td>
-                                <button onClick={() => alert('Détails: ' + JSON.stringify(order.items))}>
-                                    Détails
-                                </button>
-                            </td>
                         </tr>
                     ))}
                 </tbody>

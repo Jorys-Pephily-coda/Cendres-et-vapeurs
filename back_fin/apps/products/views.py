@@ -47,15 +47,23 @@ class ProductViewSet(viewsets.ModelViewSet):
     
 
     def retrieve(self, request, *args, **kwargs):
-        product = self.get_object()
-        Product.objects.filter(pk=product.pk).update(view_count=F('view_count') + 1)
-        product.refresh_from_db(fields=['view_count'])
-        serializer = self.get_serializer(product)
+        instance = self.get_object()
+        # Vérifier is_active sauf pour les éditeurs
+        if not instance.is_active and not (request.user.is_authenticated and request.user.is_editor):
+            return Response({'detail': 'Produit introuvable.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        Product.objects.filter(pk=instance.pk).update(view_count=F('view_count') + 1)
+        instance.refresh_from_db(fields=['view_count'])
+        serializer = self.get_serializer(instance)
         return Response(serializer.data)
     
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
-
+    
+    def perform_destroy(self, instance):
+        # Ne pas supprimer mais désactiver le produit
+        instance.is_active = False
+        instance.save(update_fields=['is_active'])
 
     @action(detail=True, methods=['post'], permission_classes=[IsUserOrAbove])
     def vote(self, request, pk=None):
@@ -94,7 +102,7 @@ class ProductViewSet(viewsets.ModelViewSet):
         serializer = self.get_serializer(products, many=True)
         return Response(serializer.data)
     
-    
+
     @action(detail=False, methods=['get'])
     def categories(self, request):
 

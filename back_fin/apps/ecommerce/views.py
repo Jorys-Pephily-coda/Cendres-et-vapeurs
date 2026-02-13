@@ -210,11 +210,29 @@ def create_order(request):
 class OrderViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
+    
     def get_queryset(self):
         user = self.request.user
         if user.is_admin:
             return Order.objects.all()
         return Order.objects.filter(user=user)
+    
+    @action(detail=True, methods=['post'], permission_classes=[IsAdminUser])
+    def update_status(self, request, pk=None):
+        order = self.get_object()
+        new_status = request.data.get('status')
+        
+        valid_statuses = ['pending', 'paid', 'shipped', 'delivered', 'cancelled', 'confirmed']
+        if new_status not in valid_statuses:
+            return Response({
+                'error': f'Statut invalide. Valeurs acceptées: {", ".join(valid_statuses)}'
+            }, status=status.HTTP_400_BAD_REQUEST)
+        
+        order.status = new_status
+        order.save(update_fields=['status', 'updated_at'])
+        
+        return Response(OrderSerializer(order).data)
+    
     @action(detail=True, methods=['get'])
     def invoice(self, request, pk=None):
         order = self.get_object()
@@ -222,3 +240,4 @@ class OrderViewSet(viewsets.ReadOnlyModelViewSet):
         response = HttpResponse(pdf_buffer, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="facture_{order.order_number}.pdf"'
         return response
+

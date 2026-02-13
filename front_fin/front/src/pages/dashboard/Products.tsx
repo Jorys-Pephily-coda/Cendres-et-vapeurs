@@ -268,8 +268,14 @@ function Products() {
                             <td>{p.stock}</td>
                             <td>{p.is_active ? 'Oui' : 'Non'}</td>
                             <td>
-                                <button onClick={() => handleEdit(p)}>Modifier</button>
-                                <button onClick={() => handleDelete(p.id)}>Supprimer</button>
+                                {p.is_active ? (
+                                    <>
+                                        <button onClick={() => handleEdit(p)}>Modifier</button>
+                                        <button onClick={() => handleDelete(p.id)}>Désactiver</button>
+                                    </>
+                                ) : (
+                                    <span style={{ color: '#888' }}>Produit désactivé</span>
+                                )}
                             </td>
                         </tr>
                     ))}
