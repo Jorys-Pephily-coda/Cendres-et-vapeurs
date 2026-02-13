@@ -98,14 +98,14 @@ function Panier() {
     if (loading) return <div>Chargement...</div>;
 
     return (
-        <div>
+        <div className="page">
             <h1>Mon Panier</h1>
             
             {!cart || cart.items.length === 0 ? (
                 <p>Votre panier est vide</p>
             ) : (
                 <>
-                    <table border={1}>
+                    <table className="data-table">
                         <thead>
                             <tr>
                                 <th>Produit</th>
@@ -127,7 +127,7 @@ function Panier() {
                                             max={item.product.stock}
                                             value={item.quantity}
                                             onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
-                                            style={{ width: '60px' }}
+                                            className="quantity-input"
                                         />
                                     </td>
                                     <td>{item.subtotal}€</td>
@@ -139,16 +139,16 @@ function Panier() {
                         </tbody>
                     </table>
 
-                    <div style={{ marginTop: '20px' }}>
+                    <div className="mt-lg">
                         <p><strong>Nombre d'articles: {cart.items_count}</strong></p>
                         <p><strong>Total: {cart.total}€</strong></p>
                     </div>
 
-                    <div style={{ marginTop: '20px' }}>
-                        <button onClick={handlePay} style={{ padding: '10px 20px', marginRight: '10px' }}>
+                    <div className="mt-lg flex-row gap-sm">
+                        <button className="btn-copper" onClick={handlePay}>
                             Payer
                         </button>
-                        <button onClick={clearCart}>Vider le panier</button>
+                        <button className="btn-danger" onClick={clearCart}>Vider le panier</button>
                     </div>
                 </>
             )}

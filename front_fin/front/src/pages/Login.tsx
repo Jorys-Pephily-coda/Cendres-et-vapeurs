@@ -17,15 +17,17 @@ function Login() {
     
 
     return (
-        <div className="login">
-            <h1>Login</h1>
-            <form className="login-form" onSubmit={handleSubmit}>
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" required />
-                <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" required />
-                <button type="submit">Login</button>
-            </form>
+        <div className="page flex-center">
+            <div className="panel form-container">
+                <h1>Login</h1>
+                <form className="login-form flex-col gap-md" onSubmit={handleSubmit}>
+                    <label htmlFor="username">Username:</label>
+                    <input type="text" id="username" name="username" required />
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" id="password" name="password" required />
+                    <button type="submit" className="btn-copper">Login</button>
+                </form>
+            </div>
         </div>
     )
 }

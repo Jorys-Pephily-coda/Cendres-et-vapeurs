@@ -26,10 +26,11 @@ function Log() {
     }, []);
 
     return (
-        <div className="log">
-            <h1>Log</h1>
-            <table className="log-table">
-                <thead>
+        <div className="page">
+            <h1>Journal</h1>
+            <div className="panel">
+                <table className="data-table">
+                    <thead>
                     <tr>
                         <th>ID</th>
                         <th>Utilisateur</th>
@@ -49,7 +50,8 @@ function Log() {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+                </table>
+            </div>
         </div>
     );
 }

@@ -17,16 +17,18 @@ function Dashboard() {
     }
 
     return (
-        <div>
-            <h1>Dashboard Administrateur</h1>
-            
-            <h2>Gestion</h2>
-            <ul>
-                <li><Link to="/dashboard/users">Gestion des Utilisateurs</Link></li>
-                <li><Link to="/dashboard/products">Gestion des Produits</Link></li>
-                <li><Link to="/dashboard/discount-codes">Gestion des Codes Promo</Link></li>
-                <li><Link to="/dashboard/orders">Gestion des Commandes</Link></li>
-            </ul>
+        <div className="page">
+            <div className="panel">
+                <h1>Dashboard Administrateur</h1>
+                
+                <h2>Gestion</h2>
+                <ul className="flex-col gap-md">
+                    <li><Link to="/dashboard/users">Gestion des Utilisateurs</Link></li>
+                    <li><Link to="/dashboard/products">Gestion des Produits</Link></li>
+                    <li><Link to="/dashboard/discount-codes">Gestion des Codes Promo</Link></li>
+                    <li><Link to="/dashboard/orders">Gestion des Commandes</Link></li>
+                </ul>
+            </div>
         </div>
     );
 }

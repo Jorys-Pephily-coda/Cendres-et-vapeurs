@@ -35,18 +35,19 @@ function A2f() {
     }
     
     return (
-        <div className="a2f">
-            <h1>Vérification 2FA</h1>
-            <p>Un code a été envoyé à votre email</p>
-            <p>Utilisateur: <strong>{username}</strong></p>
+        <div className="page flex-center">
+            <div className="panel form-container">
+                <h1>Vérification 2FA</h1>
+                <p>Un code a été envoyé à votre email</p>
+                <p>Utilisateur: <strong>{username}</strong></p>
             
             {error && (
-                <div style={{ color: 'red', marginBottom: '10px', padding: '10px', border: '1px solid red' }}>
+                <div className="alert alert-danger">
                     {error}
                 </div>
             )}
             
-            <form className="a2f-form" onSubmit={handleSubmit}>
+            <form className="a2f-form flex-col gap-md" onSubmit={handleSubmit}>
                 <label htmlFor="code">Code de vérification :</label>
                 <input 
                     type="text" 
@@ -56,10 +57,11 @@ function A2f() {
                     placeholder="Entrez le code à 6 chiffres"
                     disabled={loading}
                 />
-                <button type="submit" disabled={loading}>
+                <button type="submit" className="btn-copper" disabled={loading}>
                     {loading ? 'Vérification...' : 'Vérifier'}
                 </button>
             </form>
+            </div>
         </div>
     )
 }

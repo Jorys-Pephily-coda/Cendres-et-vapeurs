@@ -24,17 +24,17 @@ function Home() {
     if (data.co2_level > 1000) {
       setAlert({
         level: "danger",
-        message: "⚠️ ALERTE CRITIQUE - Niveau CO₂ très élevé !",
+        message: "/!\\ ALERTE CRITIQUE - Niveau CO₂ très élevé !",
       });
     } else if (data.temperature > 30) {
       setAlert({
         level: "warning",
-        message: "⚠️ Température élevée détectée",
+        message: "/!\\ Température élevée détectée",
       });
     } else if (data.air_quality_index > 150) {
       setAlert({
         level: "warning",
-        message: "⚠️ Qualité de l'air dégradée",
+        message: "/!\\ Qualité de l'air dégradée",
       });
     } else {
       setAlert(null);

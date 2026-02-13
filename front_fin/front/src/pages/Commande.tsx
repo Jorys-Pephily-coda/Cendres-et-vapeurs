@@ -89,7 +89,7 @@ function Commande() {
     const isConfirmed = order.status === 'confirmed';
 
     return (
-        <div>
+        <div className="page">
             <h1>{isConfirmed ? 'Paiement confirmé' : 'Commande'}</h1>
             <p>
                 {isConfirmed
@@ -102,7 +102,7 @@ function Commande() {
             <p><strong>Statut :</strong> {order.status}</p>
             <p><strong>Date :</strong> {new Date(order.created_at).toLocaleString()}</p>
             <h3>Articles commandés</h3>
-            <table border={1}>
+            <table className="data-table">
                 <thead>
                     <tr>
                         <th>Produit</th>
@@ -123,15 +123,15 @@ function Commande() {
                 </tbody>
             </table>
             {isPending && (
-                <div style={{ marginTop: '20px' }}>
-                    <button onClick={handleStripePay} disabled={paying} style={{ padding: '10px 20px' }}>
+                <div className="mt-lg">
+                    <button className="btn-copper" onClick={handleStripePay} disabled={paying}>
                         {paying ? 'Redirection vers Stripe...' : 'Payer avec Stripe'}
                     </button>
                 </div>
             )}
             
-            {isConfirmed && <p style={{ color: 'green' }}>Merci pour votre achat !</p>}
-            {isConfirmed && (<button onClick={downloadInvoice} style={{ marginTop: '20px', padding: '10px 20px' }}>
+            {isConfirmed && <p className="text-success">Merci pour votre achat !</p>}
+            {isConfirmed && (<button className="btn-secondary mt-lg" onClick={downloadInvoice}>
                 Télécharger la facture
             </button>)}
         </div>

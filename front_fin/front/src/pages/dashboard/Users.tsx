@@ -63,9 +63,9 @@ function Users() {
     };
 
     return (
-        <div>
+        <div className="page">
             <h1>Gestion des Utilisateurs</h1>
-            <table border={1}>
+            <table className="data-table">
                 <thead>
                     <tr>
                         <th>ID</th>

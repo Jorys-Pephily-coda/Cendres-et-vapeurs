@@ -134,7 +134,7 @@ function Products() {
     };
 
     return (
-        <div>
+        <div className="page">
             <h1>Gestion des Produits</h1>
             <button onClick={() => setShowForm(!showForm)}>
                 {showForm ? 'Annuler' : 'Nouveau Produit'}
@@ -204,11 +204,11 @@ function Products() {
                             onChange={handleImageChange}
                         />
                         {imagePreview && (
-                            <div style={{ marginTop: '10px' }}>
+                            <div className="mt-sm">
                                 <img 
                                     src={imagePreview} 
                                     alt="Aperçu" 
-                                    style={{ maxWidth: '200px', maxHeight: '200px' }}
+                                    className="img-preview"
                                 />
                             </div>
                         )}
@@ -220,7 +220,7 @@ function Products() {
             )}
 
             <h2>Liste des Produits</h2>
-            <table border={1}>
+            <table className="data-table">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -242,7 +242,7 @@ function Products() {
                                     <img 
                                         src={p.image} 
                                         alt={p.name} 
-                                        style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                        className="img-thumbnail"
                                     />
                                 ) : (
                                     'Pas d\'image'

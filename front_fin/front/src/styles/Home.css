@@ -1,74 +1,92 @@
 .home {
-    /*border-radius: 50dvh;
-    border: 1px solid #ccc;*/
-    margin: 10%;
-    padding: 10%;
-    flex: 100%;
+    padding: var(--space-xl) var(--space-2xl);
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.home h1 {
+    color: var(--color-secondary);
+    border-bottom: 2px solid #3A3530;
+    padding-bottom: var(--space-sm);
+}
+
+.home .horizontal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-xl);
+    margin-top: var(--space-xl);
+}
+
+.home .vertical {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+}
+
+.home .toxicity {
+    padding: var(--space-lg);
+}
+
+.home .log {
+    padding: var(--space-lg);
+}
+
+.home .calendar {
+    margin-top: var(--space-xl);
+    padding: var(--space-lg);
 }
 
 .legend {
-    border-radius: 50dvh;
-    border: 1px solid #ccc;
-    margin: 10%;
-    padding: 10%;
-    flex: 100%;
+    padding: var(--space-xl);
+    border-width: 2px 3px 3px 2px;
+    border-style: solid;
+    border-image: var(--gradient-rivet-border) 1;
+    background: var(--color-bg-elevated);
 }
 
 .fieldset {
-    border: 2px solid white;
-    padding: 0.3rem 1rem;
-    border-radius: 6px;
+    border-width: 2px 3px 3px 2px;
+    border-style: solid;
+    border-image: var(--gradient-rivet-border) 1;
+    padding: var(--space-md) var(--space-lg);
 }
-
 .figma-rectangle {
     width: auto;
     height: auto;
-    border-radius: 15px;
-    border: 5px solid transparent;
-
-    background:
-        conic-gradient(
-                from 90deg,
-                rgba(224, 189, 163, 1) 0deg,
-                rgba(233, 227, 213, 1) 54deg,
-                rgba(224, 189, 163, 1) 108deg,
-                rgba(233, 227, 213, 1) 162deg,
-                rgba(224, 189, 163, 1) 216deg,
-                rgba(233, 227, 213, 1) 270deg,
-                rgba(224, 189, 163, 1) 360deg
-            )
-            padding-box,
-        linear-gradient(
-                to right,
-                #6e422f,
-                #865841 21.6346%,
-                #8b5c47 44.2308%,
-                #dc987b 67.3077%,
-                #9c5a3a 83.6538%,
-                #a35d3c
-            )
-            border-box;
-
-    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border: 3px solid #5C544A;
+    background: var(--gradient-brass);
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.1),
+        0 4px 8px rgba(0, 0, 0, 0.5);
+    color: #1A1816;
+}
+.figma-border {
+    border-width: 2px 3px 4px 2px;
+    border-style: solid;
+    border-image: var(--gradient-rivet-border) 1;
+    padding: var(--space-xl);
+    background: var(--color-bg-elevated);
+    box-shadow:
+        var(--shadow-emboss),
+        inset 1px 0 0 rgba(92, 84, 74, 0.15),
+        inset -1px 0 0 rgba(0, 0, 0, 0.25);
 }
 
-.figma-border {
-    border-radius: 15px;
-    border: 5px solid transparent;
+.figma-border legend {
+    color: var(--color-secondary);
+    font-weight: 700;
+    font-size: 1rem;
+    padding: 0 var(--space-sm);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
 
-    background:
-        none,
-        linear-gradient(transparent, transparent) padding-box,
-        linear-gradient(
-                to right,
-                #6e422f,
-                #865841 21.6346%,
-                #8b5c47 44.2308%,
-                #dc987b 67.3077%,
-                #9c5a3a 83.6538%,
-                #a35d3c
-            )
-            border-box;
+@media (max-width: 768px) {
+    .home .horizontal {
+        grid-template-columns: 1fr;
+    }
 
-    background-clip: padding-box, border-box;
+    .home {
+        padding: var(--space-md);
+    }
 }

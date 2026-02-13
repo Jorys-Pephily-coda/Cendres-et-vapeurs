@@ -98,17 +98,17 @@ export default function Header() {
             <div className="sign">
               <button
                 onClick={handleLogout}
-                className="btn btn-secondary btn-sm"
+                className="btn-ghost btn-sm"
               >
                 Déconnexion
               </button>
             </div>
           ) : (
             <div className="sign">
-              <Link to="/login" onClick={handleNav("/login", false)} className="btn btn-secondary btn-sm">
+              <Link to="/login" onClick={handleNav("/login", false)} className="btn-copper btn-sm">
                 Connexion
               </Link>
-              <Link to="/register" onClick={handleNav("/register", false)} className="btn btn-primary btn-sm">
+              <Link to="/register" onClick={handleNav("/register", false)} className="btn-copper btn-sm">
                 Inscription
               </Link>
             </div>

@@ -3,9 +3,11 @@ import Header from './header'
 
 export default function Layout() {
   return (
-    <>
+    <div style={{ minHeight: '100vh' }}>
       <Header />
-      <Outlet />
-    </>
+      <main className="gear-bg" style={{ minHeight: 'calc(100vh - 70px)' }}>
+        <Outlet />
+      </main>
+    </div>
   )
 }

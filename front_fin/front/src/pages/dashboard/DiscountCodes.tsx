@@ -90,7 +90,7 @@ function DiscountCodes() {
     };
 
     return (
-        <div>
+        <div className="page">
             <h1>Gestion des Codes Promo</h1>
             <button onClick={() => setShowForm(!showForm)}>
                 {showForm ? 'Annuler' : 'Nouveau Code'}
@@ -184,7 +184,7 @@ function DiscountCodes() {
             )}
 
             <h2>Liste des Codes Promo</h2>
-            <table border={1}>
+            <table className="data-table">
                 <thead>
                     <tr>
                         <th>Code</th>

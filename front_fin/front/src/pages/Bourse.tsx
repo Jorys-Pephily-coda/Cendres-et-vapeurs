@@ -141,7 +141,8 @@ function Bourse() {
 
     return (
         <>
-            <h1>bourse</h1>
+            <div className="page">
+            <h1>Bourse</h1>
 
             {loading && <p>Loading...</p>}
 
@@ -156,10 +157,10 @@ function Bourse() {
                 </div>
             )}
 
-            <div style={{ width: "100%", height: 320 }}>
+            <div className="chart-wrapper">
                 <canvas ref={canvasRef} />
             </div>
-            
+            </div>
         </>
     )
 }

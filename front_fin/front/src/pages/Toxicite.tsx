@@ -131,11 +131,11 @@ function Toxicite() {
     }, []);
 
     return (
-        <div>
+        <div className="page">
             <h1>Toxicité en temps réel</h1>
             {error && <p>{error}</p>}
 
-            <div style={{ width: '100%', height: 320 }}>
+            <div className="chart-wrapper">
                 <canvas ref={canvasRef} />
             </div>
 

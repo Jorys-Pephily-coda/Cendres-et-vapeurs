@@ -46,9 +46,9 @@ function Orders() {
     };
 
     return (
-        <div>
+        <div className="page">
             <h1>Gestion des Commandes</h1>
-            <table border={1}>
+            <table className="data-table">
                 <thead>
                     <tr>
                         <th>N° Commande</th>
