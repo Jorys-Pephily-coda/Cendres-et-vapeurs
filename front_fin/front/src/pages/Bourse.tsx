@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
+import '../styles/Bourse.css'
 import { useParams } from "react-router-dom"
 import { Chart, registerables } from "chart.js"
 import { fetchBourseData } from "../service/Bourse"
