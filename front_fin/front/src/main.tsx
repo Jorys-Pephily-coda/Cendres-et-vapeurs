@@ -42,7 +42,7 @@ const router = createBrowserRouter([
       { path: '/dashboard/products', element: <AuthMiddleware><Products /></AuthMiddleware> },
       { path: '/dashboard/discount-codes', element: <AuthMiddleware><DiscountCodes /></AuthMiddleware> },
       { path: '/dashboard/orders', element: <AuthMiddleware><Orders /></AuthMiddleware> },
-      { path: '/log', element: <AuthMiddleware><Log /></AuthMiddleware> },
+      { path: '/log', element: <Log /> },
       { path: '/panier', element: <AuthMiddleware><Panier /></AuthMiddleware> },
       { path: '/commande', element: <AuthMiddleware><Commande /></AuthMiddleware> },
       { path: '/planning', element: <AuthMiddleware><Planning /></AuthMiddleware> },

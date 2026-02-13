@@ -250,9 +250,9 @@ function Home() {
         <legend>Home</legend>
         <h1>
           Bienvenue{" "}
-          {user?.username || user?.email || user?.name || "Utilisateur"}
+          {user?.username || user?.email || user?.name || "Inconnu"}
         </h1>
-        <p>Welcome to our website!</p>
+        <p>Bienvenue petit, fais gaffe à toi, les poissons mordent</p>
 
         <div className="horizontal">
           <div className="vertical">
