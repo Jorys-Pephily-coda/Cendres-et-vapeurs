@@ -131,7 +131,7 @@ function Panier() {
                                         )}
                                     </td>
                                     <td>{item.product.name}</td>
-                                    <td>{item.product.current_price}€</td>
+                                    <td>{item.product.current_price} ₼</td>
                                     <td>
                                         <input
                                             type="number"
@@ -142,7 +142,7 @@ function Panier() {
                                             className="quantity-input"
                                         />
                                     </td>
-                                    <td>{item.subtotal}€</td>
+                                    <td>{item.subtotal} ₼</td>
                                     <td>
                                         <button onClick={() => removeItem(item.id)}>Supprimer</button>
                                     </td>

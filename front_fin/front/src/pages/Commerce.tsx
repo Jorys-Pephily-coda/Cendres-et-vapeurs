@@ -108,7 +108,7 @@ function Commerce() {
                                 </div>
                                 <img src={product.image} alt="on est pauvre on a pas mis l'image" className="product-image" />
                                 <p>{product.description}</p>
-                                <p>Price: ${product.current_price}</p>
+                                <p>Prix: {product.current_price} ₼</p>
                                 <p>Stock: {product.stock}</p>
                                 <p>Vote : {product.vote_count}</p>
                                 
