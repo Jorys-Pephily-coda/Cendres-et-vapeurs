@@ -1,11 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { createStripeCheckoutSession } from '../service/Stripe';
 
 function Commande() {
     const [searchParams] = useSearchParams();
     const orderId = searchParams.get('orderId');
     const [order, setOrder] = useState<any>(null);
     const [loading, setLoading] = useState(true);
+    const [paying, setPaying] = useState(false);
+
+    const parsedOrderId = useMemo(() => {
+        if (!orderId) return null;
+        const n = Number(orderId);
+        return Number.isFinite(n) ? n : null;
+    }, [orderId]);
 
     useEffect(() => {
         if (orderId) {
@@ -48,20 +56,51 @@ function Commande() {
         }
     };
 
+    const handleStripePay = async () => {
+        if (!parsedOrderId) {
+            alert('orderId manquant ou invalide');
+            return;
+        }
+        try {
+            setPaying(true);
+            const origin = window.location.origin;
+            const successUrl = `${origin}/commande?orderId=${parsedOrderId}`;
+            const cancelUrl = `${origin}/commande?orderId=${parsedOrderId}`;
+
+            const session = await createStripeCheckoutSession({
+                orderId: parsedOrderId,
+                successUrl,
+                cancelUrl,
+            });
+            window.location.href = session.url;
+        } catch (e) {
+            console.error('Erreur Stripe:', e);
+            alert(e instanceof Error ? e.message : 'Erreur lors du paiement Stripe');
+        } finally {
+            setPaying(false);
+        }
+    };
+
     if (loading) return <div>Chargement...</div>;
 
     if (!order) return <div>Commande introuvable</div>;
 
+    const isPending = order.status === 'pending';
+    const isConfirmed = order.status === 'confirmed';
+
     return (
         <div>
-            <h1>Ouaip t'a bien payé</h1>
-            <p>Votre commande a été créée avec succès.</p>
+            <h1>{isConfirmed ? 'Paiement confirmé' : 'Commande'}</h1>
+            <p>
+                {isConfirmed
+                    ? 'Votre paiement a été confirmé.'
+                    : "Votre commande a été créée. Vous pouvez procéder au paiement."}
+            </p>
 
             <h2>Détails de la commande</h2>
             <p><strong>Numéro :</strong> {order.order_number}</p>
             <p><strong>Statut :</strong> {order.status}</p>
             <p><strong>Date :</strong> {new Date(order.created_at).toLocaleString()}</p>
-
             <h3>Articles commandés</h3>
             <table border={1}>
                 <thead>
@@ -83,20 +122,18 @@ function Commande() {
                     ))}
                 </tbody>
             </table>
-
-            <div style={{ marginTop: '20px' }}>
-                <p><strong>Sous-total :</strong> {order.subtotal}€</p>
-                {order.discount_amount > 0 && (
-                    <p><strong>Réduction :</strong> -{order.discount_amount}€</p>
-                )}
-                <p><strong>Total :</strong> {order.total}€</p>
-            </div>
-
-            <div style={{ marginTop: '20px' }}>
-                <button onClick={downloadInvoice} style={{ padding: '10px 20px' }}>
-                    Télécharger la facture PDF
-                </button>
-            </div>
+            {isPending && (
+                <div style={{ marginTop: '20px' }}>
+                    <button onClick={handleStripePay} disabled={paying} style={{ padding: '10px 20px' }}>
+                        {paying ? 'Redirection vers Stripe...' : 'Payer avec Stripe'}
+                    </button>
+                </div>
+            )}
+            
+            {isConfirmed && <p style={{ color: 'green' }}>Merci pour votre achat !</p>}
+            {isConfirmed && (<button onClick={downloadInvoice} style={{ marginTop: '20px', padding: '10px 20px' }}>
+                Télécharger la facture
+            </button>)}
         </div>
     );
 }

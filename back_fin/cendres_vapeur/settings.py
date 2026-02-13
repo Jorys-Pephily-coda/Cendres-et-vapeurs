@@ -152,3 +152,8 @@ CHANNEL_LAYERS = {
 # }
 TOXICITY_THRESHOLD = config('TOXICITY_THRESHOLD', default=75, cast=int)
 TWO_FACTOR_CODE_EXPIRY = 10
+
+# Stripe
+STRIPE_SECRET_KEY = config('STRIPE_SECRET_KEY', default='')
+STRIPE_WEBHOOK_SECRET = config('STRIPE_WEBHOOK_SECRET', default=config('STRIPE_SECRET_WEBHOOK', default=''))
+FRONT_URL = config('FRONT_URL', default='http://localhost:5173')

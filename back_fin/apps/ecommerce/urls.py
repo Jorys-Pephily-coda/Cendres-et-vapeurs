@@ -5,6 +5,7 @@ router = DefaultRouter()
 router.register(r'discounts', views.DiscountCodeViewSet, basename='discount')
 router.register(r'orders', views.OrderViewSet, basename='order')
 urlpatterns = [
+    path('stripe/', include('apps.ecommerce.stripeurls')),
     path('cart/', views.get_cart, name='cart'),
     path('cart/add/', views.add_to_cart, name='cart-add'),
     path('cart/<int:item_id>/', views.update_cart_item, name='cart-update'),

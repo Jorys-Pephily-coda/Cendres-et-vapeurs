@@ -26,5 +26,9 @@ Pillow>=10.3.0  # Version flexible compatible Python 3.14
 python-decouple==3.8
 pytz==2024.1
 
+# Payments
+stripe==12.4.0
+
 # Development
 django-debug-toolbar==4.2.0
+
