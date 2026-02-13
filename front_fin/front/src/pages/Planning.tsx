@@ -101,14 +101,24 @@ function Planning() {
     const openEventModal = (event?: Event) => {
         if (event) {
             setSelectedEvent(event)
+            const formatDateForInput = (dateStr: string) => {
+                const date = new Date(dateStr)
+                const year = date.getFullYear()
+                const month = String(date.getMonth() + 1).padStart(2, '0')
+                const day = String(date.getDate()).padStart(2, '0')
+                const hours = String(date.getHours()).padStart(2, '0')
+                const minutes = String(date.getMinutes()).padStart(2, '0')
+                return `${year}-${month}-${day}T${hours}:${minutes}`
+            }
+            
             setEventForm({
                 title: event.title,
                 description: event.description,
-                start_date: event.start_date,
-                end_date: event.end_date,
+                start_date: formatDateForInput(event.start_date),
+                end_date: formatDateForInput(event.end_date),
                 priority: event.priority,
                 is_all_day: event.is_all_day,
-                location: event.location
+                location: event.location || ''
             })
         } else {
             setSelectedEvent(null)
@@ -150,12 +160,10 @@ function Planning() {
     }
 
     const handleDeleteEvent = async (eventId: number) => {
-        if (window.confirm('Êtes-vous sûr de vouloir supprimer cet événement ?')) {
-            const result = await deleteEvent(eventId)
-            if (result) {
-                await loadMonthEvents()
-                closeEventModal()
-            }
+        const result = await deleteEvent(eventId)
+        if (result) {
+            await loadMonthEvents()
+            closeEventModal()
         }
     }
 
