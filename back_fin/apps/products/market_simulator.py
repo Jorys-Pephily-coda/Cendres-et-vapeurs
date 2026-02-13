@@ -1,7 +1,4 @@
-"""
-Service de gestion de la simulation de marché
-Permet de démarrer et arrêter la simulation en arrière-plan
-"""
+
 import subprocess
 import signal
 import os
@@ -9,14 +6,12 @@ from django.conf import settings
 
 
 class MarketSimulator:
-    """Gestionnaire de la simulation de marché"""
     
     _process = None
     _pid_file = os.path.join(settings.BASE_DIR, 'market_simulator.pid')
     
     @classmethod
     def is_running(cls):
-        """Vérifie si une simulation est en cours"""
         if not os.path.exists(cls._pid_file):
             return False
         
@@ -24,17 +19,14 @@ class MarketSimulator:
             with open(cls._pid_file, 'r') as f:
                 pid = int(f.read().strip())
             
-            # Vérifier si le processus existe encore
-            os.kill(pid, 0)  # Ne tue pas, juste vérifie
+            os.kill(pid, 0)  
             return True
         except (OSError, ValueError):
-            # Le processus n'existe plus, nettoyer le fichier
             cls._cleanup_pid_file()
             return False
     
     @classmethod
     def start(cls, interval=5, volatility=1.0, influence=1.0):
-        """Démarre la simulation en arrière-plan"""
         if cls.is_running():
             return {'error': 'Une simulation est déjà en cours'}
         
@@ -51,7 +43,7 @@ class MarketSimulator:
             cwd=settings.BASE_DIR,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
-            start_new_session=True  # Détacher du processus parent
+            start_new_session=True
         )
         
         # Sauvegarder le PID
@@ -68,7 +60,6 @@ class MarketSimulator:
     
     @classmethod
     def stop(cls):
-        """Arrête la simulation en cours"""
         if not os.path.exists(cls._pid_file):
             return {'error': 'Aucune simulation en cours'}
         
@@ -76,10 +67,9 @@ class MarketSimulator:
             with open(cls._pid_file, 'r') as f:
                 pid = int(f.read().strip())
             
-            # Envoyer le signal SIGTERM (Windows: CTRL_BREAK_EVENT)
-            if os.name == 'nt':  # Windows
+            if os.name == 'nt':
                 os.kill(pid, signal.CTRL_BREAK_EVENT)
-            else:  # Unix/Linux/Mac
+            else:
                 os.kill(pid, signal.SIGTERM)
             
             cls._cleanup_pid_file()

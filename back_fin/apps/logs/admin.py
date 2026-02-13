@@ -6,10 +6,13 @@ class ActivityLogAdmin(admin.ModelAdmin):
     list_filter = ('action_type', 'timestamp')
     search_fields = ('user__username', 'description', 'ip_address')
     readonly_fields = ('timestamp',)
+
     def description_preview(self, obj):
         return obj.description[:100] + '...' if len(obj.description) > 100 else obj.description
     description_preview.short_description = 'Description'
+    
     def has_add_permission(self, request):
         return False
+    
     def has_change_permission(self, request, obj=None):
         return False

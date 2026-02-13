@@ -21,18 +21,21 @@ class ToxicityDataViewSet(viewsets.ReadOnlyModelViewSet):
         except ValueError:
             limit = 50
         return queryset[:limit]
+    
 @api_view(['GET'])
 @permission_classes([AllowAny])
 def current_toxicity(request):
     latest = ToxicityData.generate_random_data()
     serializer = ToxicityDataSerializer(latest)
     return Response(serializer.data)
+
 @api_view(['POST'])
 def generate_toxicity_data(request):
 
     data = ToxicityData.generate_random_data()
     serializer = ToxicityDataSerializer(data)
     return Response(serializer.data)
+
 def toxicity_stream(request):
 
     def event_stream():

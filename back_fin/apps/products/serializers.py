@@ -20,6 +20,8 @@ class ProductSerializer(serializers.ModelSerializer):
         if request and request.user.is_authenticated:
             return ProductVote.objects.filter(product=obj, user=request.user).exists()
         return False
+    
+    
 class ProductCreateUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product

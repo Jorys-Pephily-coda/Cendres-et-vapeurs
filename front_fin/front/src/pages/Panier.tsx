@@ -108,6 +108,7 @@ function Panier() {
                     <table className="data-table">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Produit</th>
                                 <th>Prix unitaire</th>
                                 <th>Quantité</th>
@@ -118,6 +119,17 @@ function Panier() {
                         <tbody>
                             {cart.items.map((item: any) => (
                                 <tr key={item.id}>
+                                    <td>
+                                        {item.product.image ? (
+                                            <img 
+                                                src={`http://localhost:8000${item.product.image}`} 
+                                                alt={item.product.name}
+                                                style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '4px' }}
+                                            />
+                                        ) : (
+                                            <div style={{ width: '60px', height: '60px', backgroundColor: '#333', borderRadius: '4px' }}></div>
+                                        )}
+                                    </td>
                                     <td>{item.product.name}</td>
                                     <td>{item.product.current_price}€</td>
                                     <td>

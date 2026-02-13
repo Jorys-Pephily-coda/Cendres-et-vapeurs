@@ -42,7 +42,6 @@ def _build_line_items_from_order(order: Order):
             }
         )
 
-    # Fallback: si pas d'items (ou invalides), on met 1 seule ligne sur le total
     if not line_items:
         unit_amount = _to_unit_amount_cents(order.total)
         if unit_amount is None or unit_amount < 1:
@@ -69,7 +68,6 @@ def create_stripe_checkout_session(request):
         _ensure_stripe_configured()
         data = request.data
 
-        # Option simple: tu passes un order_id et on reconstruit les line_items côté back
         order_id = data.get('order_id')
         if order_id is not None:
             order = Order.objects.filter(pk=order_id, user=request.user).prefetch_related('items').first()
@@ -77,7 +75,6 @@ def create_stripe_checkout_session(request):
                 return Response({'error': 'Commande introuvable'}, status=status.HTTP_404_NOT_FOUND)
             line_items = _build_line_items_from_order(order)
         else:
-            # Option flexible: tu passes line_items directement (utile en test)
             line_items = data.get('line_items')
             if not isinstance(line_items, list) or len(line_items) == 0:
                 return Response(
@@ -95,11 +92,9 @@ def create_stripe_checkout_session(request):
             mode='payment',
             success_url=success_url,
             cancel_url=cancel_url,
-            # Permet de relier facilement la session Stripe à ta commande
             client_reference_id=str(order_id) if order_id is not None else None,
             metadata={'order_id': str(order_id)} if order_id is not None else {},
         )
-        # Tu peux utiliser soit session.id (avec stripe.js), soit session.url (redirect direct)
         return Response({'id': session.id, 'url': session.url})
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
@@ -133,7 +128,6 @@ def stripe_webhook(request):
         if isinstance(metadata, dict):
             order_id = metadata.get('order_id')
 
-        # Fallback (si metadata absent)
         if not order_id:
             order_id = session.get('client_reference_id') if isinstance(session, dict) else None
 
@@ -141,7 +135,6 @@ def stripe_webhook(request):
             order = Order.objects.filter(pk=order_id).first()
             if order:
                 payment_status = session.get('payment_status') if isinstance(session, dict) else None
-                # Idempotent: ne pas repasser en arrière
                 if order.status == 'pending' and (payment_status in (None, 'paid')):
                     order.status = 'confirmed'
                     order.save(update_fields=['status', 'updated_at'])

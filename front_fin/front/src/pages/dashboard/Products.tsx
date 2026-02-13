@@ -15,6 +15,7 @@ function Products() {
         base_price: '',
         current_price: '',
         stock: '',
+        is_active: true,
     });
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -68,6 +69,7 @@ function Products() {
             formDataToSend.append('base_price', formData.base_price);
             formDataToSend.append('current_price', formData.current_price);
             formDataToSend.append('stock', formData.stock);
+            formDataToSend.append('is_active', formData.is_active.toString());
             
             if (imageFile) {
                 formDataToSend.append('image', imageFile);
@@ -95,6 +97,7 @@ function Products() {
             category: product.category,
             base_price: product.base_price,
             current_price: product.current_price,
+            is_active: product.is_active,
             stock: product.stock,
         });
         if (product.image) {
@@ -125,6 +128,7 @@ function Products() {
             category: '',
             base_price: '',
             current_price: '',
+            is_active: true,
             stock: '',
         });
         setImageFile(null);
@@ -195,6 +199,16 @@ function Products() {
                             onChange={(e) => setFormData({ ...formData, stock: e.target.value })}
                             required
                         />
+                    </div>
+                    <div>
+                        <label>
+                            <input
+                                type="checkbox"
+                                checked={formData.is_active}
+                                onChange={(e) => setFormData({ ...formData, is_active: e.target.checked })}
+                            />
+                            {' '}Produit actif
+                        </label>
                     </div>
                     <div>
                         <label>Image du produit:</label>

@@ -2,6 +2,7 @@ from django.contrib import admin
 from .models import ChatMessage
 @admin.register(ChatMessage)
 class ChatMessageAdmin(admin.ModelAdmin):
+    
     list_display = ('user', 'message_preview', 'is_system', 'created_at')
     list_filter = ('is_system', 'created_at')
     search_fields = ('user__username', 'message')

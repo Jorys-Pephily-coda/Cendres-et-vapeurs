@@ -14,12 +14,16 @@ from .serializers import (
 from apps.products.models import Product
 from apps.authentication.permissions import IsAdminUser, IsUserOrAbove
 from .invoice import generate_invoice_pdf
+
+
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def get_cart(request):
     cart, created = Cart.objects.get_or_create(user=request.user)
     serializer = CartSerializer(cart)
     return Response(serializer.data)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def add_to_cart(request):
@@ -57,6 +61,8 @@ def add_to_cart(request):
         'message': 'Produit ajouté au panier',
         'cart': serializer.data
     }, status=status.HTTP_201_CREATED)
+
+
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_cart_item(request, item_id):
@@ -75,6 +81,8 @@ def update_cart_item(request, item_id):
     cart_item.save()
     serializer = CartSerializer(cart)
     return Response(serializer.data)
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def remove_from_cart(request, item_id):
@@ -83,6 +91,8 @@ def remove_from_cart(request, item_id):
     cart_item.delete()
     serializer = CartSerializer(cart)
     return Response(serializer.data)
+
+
 @api_view(['DELETE'])
 @permission_classes([IsAuthenticated])
 def clear_cart(request):
@@ -91,6 +101,8 @@ def clear_cart(request):
     return Response({
         'message': 'Panier vidé'
     }, status=status.HTTP_200_OK)
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def validate_discount_code(request):
@@ -116,10 +128,14 @@ def validate_discount_code(request):
         'new_total': total - discount_amount,
         'discount': DiscountCodeSerializer(discount).data
     })
+
+
 class DiscountCodeViewSet(viewsets.ModelViewSet):
     queryset = DiscountCode.objects.all()
     serializer_class = DiscountCodeSerializer
     permission_classes = [IsAdminUser]
+
+
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_order(request):
@@ -189,6 +205,8 @@ def create_order(request):
         'message': 'Commande créée avec succès',
         'order': OrderSerializer(order).data
     }, status=status.HTTP_201_CREATED)
+
+
 class OrderViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]

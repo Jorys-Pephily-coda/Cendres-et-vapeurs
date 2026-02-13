@@ -18,8 +18,12 @@ class ChatMessage(models.Model):
         verbose_name = 'Message de chat'
         verbose_name_plural = 'Messages de chat'
         ordering = ['created_at']
+
+
     def __str__(self):
         return f"{self.user.username}: {self.message[:50]}"
+    
+    
     def to_dict(self):
         return {
             'id': self.id,

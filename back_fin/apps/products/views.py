@@ -17,6 +17,8 @@ class ProductViewSet(viewsets.ModelViewSet):
     filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['name', 'description', 'category']
     ordering_fields = ['created_at', 'current_price', 'name']
+
+
     def get_queryset(self):
         queryset = Product.objects.all()
         if not (self.request.user.is_authenticated and self.request.user.is_editor):
@@ -30,24 +32,31 @@ class ProductViewSet(viewsets.ModelViewSet):
                 vote_count_db=Count('votes')
             ).order_by('-vote_count_db', '-created_at')
         return queryset
+    
+
     def get_serializer_class(self):
         if self.action in ['create', 'update', 'partial_update']:
             return ProductCreateUpdateSerializer
         return ProductSerializer
+    
+
     def get_permissions(self):
         if self.action in ['create', 'update', 'partial_update', 'destroy']:
             return [IsEditorOrAdmin()]
         return super().get_permissions()
+    
+
     def retrieve(self, request, *args, **kwargs):
         product = self.get_object()
-        # Un GET ne doit pas modifier le prix : sinon le polling front fait bouger
-        # les prix "artificiellement". On garde uniquement le comptage des vues.
         Product.objects.filter(pk=product.pk).update(view_count=F('view_count') + 1)
         product.refresh_from_db(fields=['view_count'])
         serializer = self.get_serializer(product)
         return Response(serializer.data)
+    
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+
     @action(detail=True, methods=['post'], permission_classes=[IsUserOrAbove])
     def vote(self, request, pk=None):
         product = self.get_object()
@@ -65,6 +74,8 @@ class ProductViewSet(viewsets.ModelViewSet):
                 'message': 'Vote ajouté',
                 'vote_count': product.vote_count
             }, status=status.HTTP_201_CREATED)
+        
+
     @action(detail=True, methods=['get'])
     def price_history(self, request, pk=None):
 
@@ -72,6 +83,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         history = product.price_history.all()[:50]
         serializer = PriceHistorySerializer(history, many=True)
         return Response(serializer.data)
+    
+
     @action(detail=False, methods=['get'])
     def top_voted(self, request):
 
@@ -80,6 +93,8 @@ class ProductViewSet(viewsets.ModelViewSet):
         ).order_by('-vote_count_db')[:10]
         serializer = self.get_serializer(products, many=True)
         return Response(serializer.data)
+    
+    
     @action(detail=False, methods=['get'])
     def categories(self, request):
 

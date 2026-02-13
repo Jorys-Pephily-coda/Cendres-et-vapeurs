@@ -24,6 +24,7 @@ class ToxicityData(models.Model):
         ordering = ['-timestamp']
     def __str__(self):
         return f"Toxicité {self.timestamp.strftime('%d/%m/%Y %H:%M')} - {self.get_alert_level_display()}"
+    
     @staticmethod
     def generate_random_data():
         sulfur = random.uniform(0, 100)
@@ -43,6 +44,7 @@ class ToxicityData(models.Model):
             pressure=round(random.uniform(0.9, 1.1), 2),
             alert_level=alert
         )
+    
     def to_dict(self):
         return {
             'id': self.id,

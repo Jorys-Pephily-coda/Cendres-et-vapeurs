@@ -10,5 +10,7 @@ class ContactMessage(models.Model):
         verbose_name = 'Message de contact'
         verbose_name_plural = 'Messages de contact'
         ordering = ['-created_at']
+
+        
     def __str__(self):
         return f"{self.name} - {self.subject}"

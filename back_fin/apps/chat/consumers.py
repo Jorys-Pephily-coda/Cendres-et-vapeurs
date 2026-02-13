@@ -5,6 +5,8 @@ from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
 User = get_user_model()
 class ChatConsumer(AsyncWebsocketConsumer):
+
+    
     async def connect(self):
         self.room_name = 'chat'
         self.room_group_name = f'chat_{self.room_name}'
@@ -31,6 +33,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'username': self.user.username
             }
         )
+
+
     async def disconnect(self, close_code):
         if hasattr(self, 'room_group_name'):
             await self.channel_layer.group_send(
@@ -44,6 +48,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 self.room_group_name,
                 self.channel_name
             )
+
+
     async def receive(self, text_data):
         try:
             data = json.loads(text_data)
@@ -63,21 +69,29 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'type': 'error',
                 'message': 'Format JSON invalide'
             }))
+
+
     async def chat_message(self, event):
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'message': event['message']
         }))
+
+
     async def user_join(self, event):
         await self.send(text_data=json.dumps({
             'type': 'user_join',
             'username': event['username']
         }))
+
+
     async def user_leave(self, event):
         await self.send(text_data=json.dumps({
             'type': 'user_leave',
             'username': event['username']
         }))
+
+
     @database_sync_to_async
     def save_message(self, message):
         from .models import ChatMessage
