@@ -48,7 +48,6 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         instance = self.get_object()
-        # Vérifier is_active sauf pour les éditeurs
         if not instance.is_active and not (request.user.is_authenticated and request.user.is_editor):
             return Response({'detail': 'Produit introuvable.'}, status=status.HTTP_404_NOT_FOUND)
         
@@ -61,7 +60,6 @@ class ProductViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
     
     def perform_destroy(self, instance):
-        # Ne pas supprimer mais désactiver le produit
         instance.is_active = False
         instance.save(update_fields=['is_active'])
 
@@ -113,15 +111,6 @@ class ProductViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['post'], permission_classes=[IsEditorOrAdmin])
     def start_simulation(self, request):
-        """
-        Démarre la simulation de marché
-        POST /api/products/start_simulation/
-        Body: {
-            "interval": 5,  # Secondes entre chaque tick (défaut: 5)
-            "volatility": 1.0,  # Multiplicateur de volatilité (défaut: 1.0)
-            "influence": 1.0  # Multiplicateur d'influence global (défaut: 1.0)
-        }
-        """
         interval = request.data.get('interval', 5)
         volatility = request.data.get('volatility', 1.0)
         influence = request.data.get('influence', 1.0)
@@ -135,10 +124,6 @@ class ProductViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['post'], permission_classes=[IsEditorOrAdmin])
     def stop_simulation(self, request):
-        """
-        Arrête la simulation de marché
-        POST /api/products/stop_simulation/
-        """
         result = MarketSimulator.stop()
         
         if 'error' in result:
@@ -148,9 +133,5 @@ class ProductViewSet(viewsets.ModelViewSet):
     
     @action(detail=False, methods=['get'])
     def simulation_status(self, request):
-        """
-        Vérifie le statut de la simulation
-        GET /api/products/simulation_status/
-        """
         result = MarketSimulator.status()
         return Response(result, status=status.HTTP_200_OK)
