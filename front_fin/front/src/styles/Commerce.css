@@ -149,6 +149,7 @@
     background: none;
     border: none;
     cursor: pointer;
+    color: red;
     width: fit-content;
     padding: 0;
     align-self: center;

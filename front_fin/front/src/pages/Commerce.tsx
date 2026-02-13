@@ -4,7 +4,6 @@ import { fetchCommerce, addToCart, voteProduct, searchProducts } from "../servic
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeart as faHeartSolid, faCoins } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
-import loadingSound from '../assets/sounds/peak.mp3'
 import '../styles/Commerce.css'
 import { Link } from "react-router-dom"
 
@@ -13,17 +12,7 @@ function Commerce() {
     const [commerceData, setCommerceData] = useState<any>([])
     const [loading, setLoading] = useState(true)
     const [searchQuery, setSearchQuery] = useState("")
-    const enterFullscreen = () => {
-        const elem = document.documentElement
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(err => console.log('Fullscreen failed:', err))
-        }
-    }
-    const exitFullscreen = () => {
-        if (document.exitFullscreen) {
-            document.exitFullscreen().catch(err => console.log('Exit fullscreen failed:', err))
-        }
-    }
+
 
     const handleSearch = async () => {
         if (searchQuery.trim() === "") {
@@ -39,14 +28,7 @@ function Commerce() {
         }
     }
 
-    const playLoadingSound = () => {
-        const audio = new Audio(loadingSound)
-        audio.volume = 1.0
-        console.log('Tentative de lecture du son...')
-        audio.play()
-            .then(() => console.log('Son joué avec succès'))
-            .catch(error => console.log('Audio play failed:', error))
-    }
+
 
     const handleVote = async (productId: number) => {
         const result = await voteProduct(productId)
@@ -57,20 +39,15 @@ function Commerce() {
 
     const refreshData = async () => {
         setLoading(true)
-        enterFullscreen()
-        playLoadingSound()
         const data = await fetchCommerce()
         if (data) {
             setCommerceData(data)
             setLoading(false)
-            exitFullscreen()
         }
     }
 
     useEffect(() => {
         const getCommerceData = async () => {
-            enterFullscreen()
-            playLoadingSound()
             const data = await fetchCommerce()
             if (data) {
                 setCommerceData(data)
@@ -79,7 +56,6 @@ function Commerce() {
             else{
                 console.error('No commerce data received')
             }
-            exitFullscreen()
         }
         getCommerceData()
         console.log('Commerce data:', commerceData)
@@ -88,7 +64,7 @@ function Commerce() {
     if (loading) {
 
         return <div className="loading">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQj8Pqb3cB2ZoMdBhbYPlXoIjm9iYy6xmPATQ&s" alt="Loading" className="loading-image" />
+            <img src="https://img.freepik.com/vecteurs-libre/illustration-icone-doodle-engrenage_53876-5596.jpg?semt=ais_hybrid&w=740&q=80https://cdn-icons-png.flaticon.com/512/73/73989.png" alt="Loading" className="loading-image" />
         </div>
     }
     
@@ -134,6 +110,7 @@ function Commerce() {
                                 <p>{product.description}</p>
                                 <p>Price: ${product.current_price}</p>
                                 <p>Stock: {product.stock}</p>
+                                <p>Vote : {product.vote_count}</p>
                                 
                                 {user && (<input 
                                     type="number" 
