@@ -1,24 +1,53 @@
 import "../styles/Home.css";
 import { useAuth } from "../context/AuthContext";
 import { useState, useEffect, useRef } from "react";
+import { fetchMonthEvents } from "../service/Calendar";
+import { getLogs } from "../service/Log";
 
 interface Alert {
   level: "danger" | "warning";
   message: string;
 }
 
-interface Thresholds {
-  warning: number;
-  danger: number;
+interface Event {
+  id: number;
+  title: string;
+  description: string;
+  start_date: string;
+  end_date: string;
+  priority: "low" | "medium" | "high" | "critical";
+  is_all_day: boolean;
+  location: string;
+  created_by: any;
+}
+
+interface LogEntry {
+  id: number;
+  user: number;
+  user_name: string;
+  action_type: string;
+  action_type_display: string;
+  description: string;
+  timestamp: string;
 }
 
 function Home() {
   const [currentData, setCurrentData] = useState<any>(null);
   const [alert, setAlert] = useState<Alert | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [events, setEvents] = useState<Event[]>([]);
+  const [logs, setLogs] = useState<LogEntry[]>([]);
   const intervalRef = useRef<number | null>(null);
+  const currentDate = new Date();
 
   const { user } = useAuth();
+
+  const monthNames = [
+    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
+    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre"
+  ];
+
+  const dayNames = ["Lun", "Mar", "Mer", "Jeu", "Ven", "Sam", "Dim"];
 
   const checkAlerts = (data: any): void => {
     if (data.co2_level > 1000) {
@@ -92,11 +121,98 @@ function Home() {
     };
   }, []);
 
-  const getStatusClass = (value: number, thresholds: Thresholds): string => {
-    if (value >= thresholds.danger) return "danger";
-    if (value >= thresholds.warning) return "warning";
-    return "success";
+  useEffect(() => {
+    const loadCurrentMonthEvents = async () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = now.getMonth() + 1;
+      const data = await fetchMonthEvents(year, month);
+      if (data && data.events) {
+        setEvents(data.events);
+      }
+    };
+
+    const loadRecentLogs = async () => {
+      const data = await getLogs(10);
+      if (data && data.results) {
+        setLogs(data.results);
+      }
+    };
+
+    loadCurrentMonthEvents();
+    loadRecentLogs();
+  }, []);
+
+  const getDaysInMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    return new Date(year, month + 1, 0).getDate();
   };
+
+  const getFirstDayOfMonth = (date: Date) => {
+    const year = date.getFullYear();
+    const month = date.getMonth();
+    const firstDay = new Date(year, month, 1).getDay();
+    return firstDay === 0 ? 6 : firstDay - 1;
+  };
+
+  const getEventsForDay = (day: number) => {
+    return events.filter((event) => {
+      const eventDate = new Date(event.start_date);
+      return (
+        eventDate.getDate() === day &&
+        eventDate.getMonth() === currentDate.getMonth() &&
+        eventDate.getFullYear() === currentDate.getFullYear()
+      );
+    });
+  };
+
+  const isToday = (day: number) => {
+    const today = new Date();
+    return (
+      day === today.getDate() &&
+      currentDate.getMonth() === today.getMonth() &&
+      currentDate.getFullYear() === today.getFullYear()
+    );
+  };
+
+  const daysInMonth = getDaysInMonth(currentDate);
+  const firstDay = getFirstDayOfMonth(currentDate);
+  const calendarDays = [];
+
+  for (let i = 0; i < firstDay; i++) {
+    calendarDays.push(
+      <div key={`empty-${i}`} className="calendar-day empty"></div>
+    );
+  }
+
+  for (let day = 1; day <= daysInMonth; day++) {
+    const dayEvents = getEventsForDay(day);
+    calendarDays.push(
+      <div
+        key={day}
+        className={`calendar-day ${isToday(day) ? "today" : ""} ${
+          dayEvents.length > 0 ? "has-events" : ""
+        }`}
+      >
+        <span className="day-number">{day}</span>
+        {dayEvents.length > 0 && (
+          <div className="event-indicators">
+            {dayEvents.slice(0, 3).map((event, idx) => (
+              <div
+                key={idx}
+                className={`event-dot priority-${event.priority}`}
+                title={event.title}
+              ></div>
+            ))}
+            {dayEvents.length > 3 && (
+              <span className="more-events">+{dayEvents.length - 3}</span>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  }
 
   if (!currentData) {
     return (
@@ -140,13 +256,48 @@ function Home() {
 
           <div className="log">
             <h1>Journal des activités</h1>
-            <div className="history-list"></div>
+            <div className="history-list">
+              {logs.length > 0 ? (
+                <table className="data-table">
+                  <thead>
+                    <tr>
+                      <th>Utilisateur</th>
+                      <th>Action</th>
+                      <th>Description</th>
+                      <th>Date</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {logs.map((log) => (
+                      <tr key={log.id}>
+                        <td>{log.user_name}</td>
+                        <td>{log.action_type_display}</td>
+                        <td>{log.description}</td>
+                        <td>{new Date(log.timestamp).toLocaleString()}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              ) : (
+                <p>Aucune activité récente</p>
+              )}
+            </div>
           </div>
         </div>
 
         <div className="calendar">
-          <h1>Calendrier</h1>
-          {/* TODO: Implémenter le calendrier */}
+          <h1>
+            Calendrier - {monthNames[currentDate.getMonth()]}{" "}
+            {currentDate.getFullYear()}
+          </h1>
+          <div className="calendar-grid">
+            {dayNames.map((day) => (
+              <div key={day} className="calendar-day-name">
+                {day}
+              </div>
+            ))}
+            {calendarDays}
+          </div>
         </div>
       </fieldset>
     </div>

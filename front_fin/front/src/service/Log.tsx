@@ -1,6 +1,9 @@
-export const getLogs = async () => {
+export const getLogs = async (limit?: number) => {
     try {
-        const response = await fetch('http://localhost:8000/api/logs/', {
+        const params = new URLSearchParams();
+        if (limit) params.append('limit', limit.toString());
+        
+        const response = await fetch(`http://localhost:8000/api/logs/?${params}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',

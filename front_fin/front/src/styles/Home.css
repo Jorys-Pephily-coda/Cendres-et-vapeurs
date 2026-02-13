@@ -1,7 +1,8 @@
 .home {
     padding: var(--space-xl) var(--space-2xl);
-    max-width: 1200px;
+    max-width: 1600px;
     margin: 0 auto;
+    width: 100%;
 }
 
 .home h1 {
@@ -31,9 +32,124 @@
     padding: var(--space-lg);
 }
 
+.home .log h1 {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-secondary);
+}
+
+.home .log .history-list {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.home .log .data-table {
+    font-size: 0.85rem;
+}
+
+.home .log .data-table th,
+.home .log .data-table td {
+    padding: 0.5rem 0.75rem;
+}
+
 .home .calendar {
     margin-top: var(--space-xl);
     padding: var(--space-lg);
+}
+
+.home .calendar h1 {
+    font-size: 1.2rem;
+    margin-bottom: var(--space-md);
+    color: var(--color-secondary);
+}
+
+.home .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+}
+
+.home .calendar-day-name {
+    text-align: center;
+    font-weight: 700;
+    color: var(--color-secondary);
+    padding: 0.4rem;
+    background: linear-gradient(180deg, #2C2824, #1A1816);
+    border: 1px solid #3A3530;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.home .calendar-day {
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0.3rem;
+    border: 1px solid #2C2824;
+    font-size: 0.85rem;
+    background: var(--color-bg-surface);
+    color: var(--color-text);
+    font-weight: 500;
+    position: relative;
+}
+
+.home .day-number {
+    font-weight: 700;
+}
+
+.home .event-indicators {
+    display: flex;
+    gap: 2px;
+    margin-top: 4px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.home .event-dot {
+    width: 5px;
+    height: 5px;
+    border-radius: var(--radius-full);
+}
+
+.home .event-dot.priority-low {
+    background: var(--color-patina);
+}
+
+.home .event-dot.priority-medium {
+    background: var(--color-secondary);
+}
+
+.home .event-dot.priority-high {
+    background: var(--color-ember);
+}
+
+.home .event-dot.priority-critical {
+    background: #C0392B;
+}
+
+.home .more-events {
+    font-size: 0.6rem;
+    color: var(--color-text-dim);
+}
+
+.home .calendar-day.has-events {
+    border-color: #4A433B;
+}
+
+.home .calendar-day.empty {
+    border: none;
+    background: transparent;
+}
+
+.home .calendar-day.today {
+    background: var(--color-primary);
+    color: var(--color-text);
+    font-weight: bold;
+    border-color: var(--color-secondary-dark);
+    box-shadow: var(--shadow-md);
 }
 
 .legend {
