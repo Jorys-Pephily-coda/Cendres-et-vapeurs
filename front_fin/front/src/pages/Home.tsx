@@ -3,6 +3,9 @@ import { useAuth } from "../context/AuthContext";
 import { useState, useEffect, useRef } from "react";
 import { fetchMonthEvents } from "../service/Calendar";
 import { getLogs } from "../service/Log";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faClock } from "@fortawesome/free-regular-svg-icons";
+import { faMapPin } from "@fortawesome/free-solid-svg-icons/faMapPin";
 
 interface Alert {
   level: "danger" | "warning";
@@ -342,13 +345,13 @@ function Home() {
                   {event.description && <p>{event.description}</p>}
                   <div className="event-details">
                     <span>
-                      ⏰{" "}
+                      <FontAwesomeIcon icon={faClock} />
                       {new Date(event.start_date).toLocaleTimeString("fr-FR", {
                         hour: "2-digit",
                         minute: "2-digit",
                       })}
                     </span>
-                    {event.location && <span>📍 {event.location}</span>}
+                    {event.location && <span><FontAwesomeIcon icon={faMapPin} /> {event.location}</span>}
                   </div>
                 </div>
               ))}

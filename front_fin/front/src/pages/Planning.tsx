@@ -2,6 +2,12 @@ import { useState, useEffect } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { fetchMonthEvents, createEvent, updateEvent, deleteEvent } from '../service/Calendar'
 import '../styles/Planning.css'
+import { faMapPin } from '@fortawesome/free-solid-svg-icons/faMapPin'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClock } from '@fortawesome/free-solid-svg-icons/faClock'
+import { faTrash } from '@fortawesome/free-solid-svg-icons/faTrash'
+import { faPencil } from '@fortawesome/free-solid-svg-icons/faPencil'
+
 
 interface Event {
     id: number
@@ -256,16 +262,16 @@ function Planning() {
                                                 </span>
                                                 {isEditorOrAdmin && (
                                                     <div className="event-actions">
-                                                        <button onClick={() => openEventModal(event)} className="btn-edit">✏️</button>
-                                                        <button onClick={() => handleDeleteEvent(event.id)} className="btn-delete">🗑️</button>
+                                                        <button onClick={() => openEventModal(event)} className="btn-edit"><FontAwesomeIcon icon={faPencil} /></button>
+                                                        <button onClick={() => handleDeleteEvent(event.id)} className="btn-delete"><FontAwesomeIcon icon={faTrash} /></button>
                                                     </div>
                                                 )}
                                             </div>
                                         </div>
                                         {event.description && <p>{event.description}</p>}
                                         <div className="event-details">
-                                            <span>⏰ {new Date(event.start_date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
-                                            {event.location && <span>📍 {event.location}</span>}
+                                            <span><FontAwesomeIcon icon={faClock} />{new Date(event.start_date).toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' })}</span>
+                                            {event.location && <span><FontAwesomeIcon icon={faMapPin} /> {event.location}</span>}
                                         </div>
                                     </div>
                                 ))}

@@ -22,7 +22,6 @@ export const fetchLogin = async (
                 navigate('/a2f', { state: { username: data.username } })
             } else {
                 if (setUser) setUser(data.user)
-                sessionStorage.setItem('connected', 'true')
                 navigate('/')
             }
             console.log('Login successful:', data)
@@ -82,7 +81,6 @@ export const fetch2FA = async (
         if (response.ok) {
             const data = await response.json()
             if (setUser) setUser(data.user)
-            sessionStorage.setItem('connected', 'true')
             console.log('2FA verification successful:', data)
             navigate('/')
         } else {
