@@ -48,6 +48,7 @@ const router = createBrowserRouter([
       { path: '/planning', element: <AuthMiddleware><Planning /></AuthMiddleware> },
       { path: '/toxicite', element: <AuthMiddleware><Toxicite /></AuthMiddleware> },
       { path: '/bourse', element: <AuthMiddleware><Bourse /></AuthMiddleware> },
+      { path: '/bourse/:id', element: <AuthMiddleware><Bourse /></AuthMiddleware> },
     ]
   },
 ])

@@ -130,6 +130,7 @@ class PriceHistory(models.Model):
         ('view', 'Consultation'),
         ('purchase', 'Achat'),
         ('manual', 'Ajustement manuel'),
+        ('simulation', 'Simulation de marché'),
     ]
 
     product = models.ForeignKey(

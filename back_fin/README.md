@@ -84,7 +84,19 @@ python manage.py createsuperuser
 python manage.py loaddata seed_data.json
 ```
 
-### 8. Lancer le serveur
+### 8. Lancer l'algorithme de simulation de marché (optionnel)
+
+```bash
+python manage.py simulate_market --interval=1 --volatility=1.0 --influence=1.0 
+```
+```
+interval=x "fluctue tout les x secondes"
+volatility=y "y est un multiplicateur de la volatilité (défaut: 1.0, plus c'est élevé plus les prix fluctuent)"
+influence=z "z est un multiplicateur de l'influence globale (défaut: 1.0, plus c'est élevé plus les votes influencent les prix)"
+```
+
+
+### 9. Lancer le serveur
 
 ```bash
 # Mode développement

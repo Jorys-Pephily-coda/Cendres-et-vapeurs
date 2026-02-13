@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import { useAuth } from "../context/AuthContext"
 import { fetchCommerce, addToCart, voteProduct, searchProducts } from "../service/Commerce"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons'
+import { faHeart as faHeartSolid, faCoins } from '@fortawesome/free-solid-svg-icons'
 import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons'
 import loadingSound from '../assets/sounds/peak.mp3'
 import '../styles/Commerce.css'
@@ -103,7 +103,6 @@ function Commerce() {
                     <h1>Bienvenue dans la forge des nains</h1>
                     <p>Fait toi plaisir petit humain mais eh faut que ton porte monnaie tienne gamin</p>
                 </div>
-                <button className="redirect-btn"><Link to="/bourse" className="bourse-btn">Cours de la bourse</Link></button>
             </div>
             <div className="search">
                 <input type="text" placeholder="Rechercher un produit..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="search-input" />
@@ -114,8 +113,11 @@ function Commerce() {
                         commerceData.results.map((product: any) => (
                             <div className="product-card" key={product.id}>
                                 <div className="card-top">
-                                    <div className="blank-card"> </div>
-
+                                    <button className="bourse-product-btn">
+                                        <Link to={`/bourse/${product.id}`} className="bourse-product-link">
+                                            <FontAwesomeIcon icon={faCoins} className="coin-icon" />
+                                        </Link>
+                                    </button>
                                     <div className="product-name">
                                         <h3>{product.name}</h3>
                                     </div>

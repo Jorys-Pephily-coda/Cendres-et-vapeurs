@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     'apps.contact',
     'apps.logs',
     'apps.utils',
+    'django_extensions',
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

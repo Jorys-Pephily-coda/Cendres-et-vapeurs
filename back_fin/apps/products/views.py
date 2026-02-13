@@ -3,13 +3,14 @@ from rest_framework import viewsets, status, filters
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
-from django.db.models import Count
+from django.db.models import Count, F
 from .models import Product, ProductVote, PriceHistory
 from .serializers import (
     ProductSerializer, ProductCreateUpdateSerializer,
     ProductVoteSerializer, PriceHistorySerializer
 )
 from apps.authentication.permissions import IsEditorOrAdmin, IsUserOrAbove
+from .market_simulator import MarketSimulator
 class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.filter(is_active=True)
     permission_classes = [IsAuthenticatedOrReadOnly]
@@ -39,7 +40,10 @@ class ProductViewSet(viewsets.ModelViewSet):
         return super().get_permissions()
     def retrieve(self, request, *args, **kwargs):
         product = self.get_object()
-        product.fluctuate_price(action='view')
+        # Un GET ne doit pas modifier le prix : sinon le polling front fait bouger
+        # les prix "artificiellement". On garde uniquement le comptage des vues.
+        Product.objects.filter(pk=product.pk).update(view_count=F('view_count') + 1)
+        product.refresh_from_db(fields=['view_count'])
         serializer = self.get_serializer(product)
         return Response(serializer.data)
     def perform_create(self, serializer):
@@ -83,3 +87,47 @@ class ProductViewSet(viewsets.ModelViewSet):
         return Response({
             'categories': [cat for cat in categories if cat]
         })
+
+    @action(detail=False, methods=['post'], permission_classes=[IsEditorOrAdmin])
+    def start_simulation(self, request):
+        """
+        Démarre la simulation de marché
+        POST /api/products/start_simulation/
+        Body: {
+            "interval": 5,  # Secondes entre chaque tick (défaut: 5)
+            "volatility": 1.0,  # Multiplicateur de volatilité (défaut: 1.0)
+            "influence": 1.0  # Multiplicateur d'influence global (défaut: 1.0)
+        }
+        """
+        interval = request.data.get('interval', 5)
+        volatility = request.data.get('volatility', 1.0)
+        influence = request.data.get('influence', 1.0)
+        
+        result = MarketSimulator.start(interval=interval, volatility=volatility, influence=influence)
+        
+        if 'error' in result:
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(result, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['post'], permission_classes=[IsEditorOrAdmin])
+    def stop_simulation(self, request):
+        """
+        Arrête la simulation de marché
+        POST /api/products/stop_simulation/
+        """
+        result = MarketSimulator.stop()
+        
+        if 'error' in result:
+            return Response(result, status=status.HTTP_400_BAD_REQUEST)
+        
+        return Response(result, status=status.HTTP_200_OK)
+    
+    @action(detail=False, methods=['get'])
+    def simulation_status(self, request):
+        """
+        Vérifie le statut de la simulation
+        GET /api/products/simulation_status/
+        """
+        result = MarketSimulator.status()
+        return Response(result, status=status.HTTP_200_OK)
